@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+
+{% block content %}
+<div class="d-flex flex-row justify-content-around">
+    <div class="ads_panel_side px-5 bg-primary" style="width: 30%; height: 700px; margin-top:5%;">
+        <h3 class="text-center">Ads</h3>
+    </div>
+    <style>
+        .ads_panel_side {
+            position: sticky;
+            top: 10%;
+            z-index: 100;
+        }
+    </style>
+
+
+    <main role="main" class="inner cover text-center mb-5 pb-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">블로그분석</li>
+            </ol>
+        </nav>
+        <style>
+            .no-display {
+                display: none;
+            }
+        </style>
+        <div class="row ads_panel_main bg-primary">
+            <h3 class="text-center">Ads</h3>
+        </div>
+        <div class="d-flex flex-column w-100">
+            <div class="row my-3">
+                <div class="col">
+                    <div class="form-group d-flex flex-row justify-content-center">
+                        <input type="text" name="search_keyword" id="analyze_post_input" class="form-control"
+                            placeholder="키워드를 입력하세요" aria-label="키워드를 입력하세요" aria-describedby="basic-addon2"
+                            style="width:50%;" />
+
+                        <button type="submit" id="analyze_post_btn" class="btn btn-primary">키워드 확장하기</button>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-column justify-content-center align-middle">
+                <div class="spinner-border text-secondary mx-auto mb-5" role="status" id="spinner"
+                    style="margin-top:50px; width:100px; height:100px; border-width:10px; display:none;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div id="spinner_info">
+                    <h3>키워드를 확장 중입니다</h3>
+                    <h4 class="text-muted">이 작업은 1분 가량 소요됩니다</h4>
+                </div>
+            </div>
+            <div class="row my-2 text-center" id="analyze_post_content" style="display:none;">
+                <div class="alert alert-success mb-3" role="alert">
+                    <div style="font-size:20px;" id="analyze_post_keyword">
+                        <!-- javascript -->
+                    </div>
+                </div>
+            </div>
+            <div class="row my-1">
+                <div class="col" id="analyze_post_pc" style="display:none;">
+                    <table class="table table-striped table-bordered table-hover table-sm">
+                        <thead class="table">
+                            <tr>
+                                <th style="font-size:70%; width:5%; vertical-align:middle;">#</th>
+                                <th style="font-size:70%; width:20%; vertical-align:middle;">글자수</th>
+                                <th style="font-size:70%; width:20%;">이미지 갯수</th>
+                                <th style="font-size:70%; width:20%;">동영상 갯수</th>
+                                <th style="font-size:70%; width:20%;">키워드 반복횟수</th>
+                            </tr>
+                        </thead>
+                        <tbody id="analyze_post_table">
+                            {% for data in result_list %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td><strong>{{ data.keyword }}</strong></td>
+                                <td><strong>{{ data.monthlyPcQcCnt | intcomma }}</strong></td>
+                                <td><strong>{{ data.monthlyMobileQcCnt | intcomma }}</strong></td>
+                                <td><strong>{{ data.pubAmount | intcomma }}</strong></td>
+                                <td><strong>{{ data.keywordRating }}</strong></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col" id="recommend_keywords_mobile">
+                    <table class="table table-striped table-bordered table-hover table-sm">
+                        <thead class="table-dark">
+                            <tr>
+                                <th style="font-size:70%; width:5%">#</th>
+                                <th style="font-size:70%; width:40%; vertical-align:middle;">키워드</th>
+                                <th style="font-size:70%; width:10%;">키워드<br>품질</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for list in recomm_lists %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td><strong>{{ list.keyword }}</strong></td>
+                                <td><strong style="color:red;">{{list.kwQuality}}</strong></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script src="{% static 'postAnalyze.js' %}"></script>
+    </main>
+
+    <div class="ads_panel_side px-5 bg-primary" style="width: 30%; height: 700px; margin-top:5%;">
+        <h3 class="text-center">Ads</h3>
+    </div>
+</div>
+
+{% endblock %}

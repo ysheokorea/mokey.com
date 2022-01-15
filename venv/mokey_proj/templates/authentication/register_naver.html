@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<main>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Register</li>
+        </ol>
+    </nav>
+	<div class="container" style="margin-top:70px;">
+        <p class="text-center">Naver Register</p>
+		<div class="d-flex justify-content-center" style="height:70%;">
+			<div class="user_card">
+				<div class="d-flex justify-content-center">
+					<h3 id="form-title">회원가입</h3>
+				</div>
+				<div class="d-flex justify-content-center form_container">
+
+					<form method="POST" action="">
+                        {% csrf_token %}
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text bg-dark"><i class="fas fa-key"></i></span>
+							</div>
+							{{form.password1}}
+						</div>
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text bg-dark"><i class="fas fa-key"></i></span>
+							</div>
+							{{form.password2}}
+						</div>
+
+                        <div class="row d-flex flex-column my-1">
+                            <div class="row mt-1 w-100 px-3 m-0">
+                                <input class="btn btn-dark btn-sm d-flex flex-row justify-content-center" type="submit" value="회원가입">
+                            </div>
+                        </div>
+					</form>
+				</div>
+                
+                {% for message in messages %}
+                    <p id="messages">{{message}}</p>
+                {% endfor %}
+		
+				<div class="mt-4 d-flex flex-row justify-content-center">
+					<div class="links mr-4">
+						<a href="{% url 'authentication:user_login' %}" class="">로그인</a>
+					</div>
+					<div class="d-flex justify-content-center links">
+						<a href="{% url 'authentication:resetPassword' %}" class="">비밀번호 재설정</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+        /*
+		var naver_id_login = new naver_id_login("y118x7mal4_oDlBRqK4r", "http://localhost:8000/authentication/naver_register/");  
+		const accessTokenBtn = document.getElementById("accessTokenBtn");
+	  
+		// 접근 토큰 value 출력
+		var accsess_token_data = naver_id_login.oauthParams.access_token
+		console.log(accsess_token_data);
+		// 네이버 사용자 프로필 조회
+		naver_id_login.get_naver_userprofile("naverSignInCallback()");
+		// 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+		function naverSignInCallback() {
+			console.log(naver_id_login.getProfileData('email'));
+			console.log(naver_id_login.getProfileData('name'));
+		//   alert(naver_id_login.getProfileData('email'));
+		//   alert(naver_id_login.getProfileData('nickname'));
+		//   alert(naver_id_login.getProfileData('age'));
+		const email=naver_id_login.getProfileData('email')
+		const name=naver_id_login.getProfileData('name')
+	
+		fetch('/authentication/naver_register/', {
+			body:JSON.stringify({name:name,email:email}),
+			method:"POST"
+		})
+		}
+        */
+	  </script>
+</main>
+{% endblock %}

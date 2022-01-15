@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="d-flex flex-row justify-content-around">
+    <div class="ads_panel_side px-5 bg-primary" style="width: 25%; height: 700px; margin-top:5%;">
+        <h3 class="text-center">Ads</h3>
+    </div>
+    <style>
+        .ads_panel_side {
+            position: sticky;
+            top: 10%;
+            z-index: 100;
+        }
+    </style>
+
+
+    <main>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Login</li>
+            </ol>
+        </nav>
+        <div class="container" style="margin-top:70px;">
+            <div class="d-flex justify-content-center" style="height:70%;">
+                <div class="user_card">
+                    <div class="d-flex justify-content-center mb-0">
+                        <h3 id="form-title" style="margin-bottom:0;">로그인</h3>
+                    </div>
+                    <div class="d-flex justify-content-center form_container">
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <div class="input-group mb-3">
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-dark"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input type="email" name="email" placeholder="이메일" class="form-control">
+                            </div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-dark"><i class="fas fa-key"></i></span>
+                                </div>
+                                <input type="password" name="password" placeholder="비밀번호" class="form-control">
+                            </div>
+                            <div class="row mt-3 w-100 px-3 m-0">
+                                <input class="btn btn-dark btn-sm d-flex flex-row justify-content-center" type="submit"
+                                    value="로그인">
+                            </div>
+                            <hr>
+                            <div class="row d-flex flex-column my-1">
+                                <!-- Google Login -->
+                                <!-- <div class="row mt-1 px-3 m-0" >
+                                <button class="btn btn-sm btn-primary d-flex flex-row justify-content-between">
+                                    <img src="{% static 'image/google_logo.png' %}" alt="" style="height:25px; width:25px;">
+                                    <strong>Google Login</strong>  
+                                </button>
+                            </div> -->
+                                <!-- Naver Login -->
+                                <!-- <div class="row mt-1 px-3 m-0">
+                                <div class="text-center" id="naver_id_login"></div>
+                            </div> -->
+                                <!-- Kakao Login -->
+                                <!-- <div class="row mt-1 px-3 m-0">
+                                <button class="btn btn-sm btn-warning d-flex flex-row justify-content-between">
+                                    <img src="{% static 'image/kakao_logo.png' %}" alt="" style="height:25px; width:25px;">
+                                    Kakao Login
+                                </button>
+                            </div> -->
+                            </div>
+                        </form>
+                    </div>
+
+                    {% for message in messages %}
+                    <p id="messages" style="text-align: center;">{{message}}</p>
+                    {% endfor %}
+
+                    <div class="mt-2 d-flex flex-row justify-content-center">
+                        <div class="d-flex justify-content-center links mr-1">
+                            <p><a href="{% url 'authentication:user_register' %}" class="ml-2">회원가입</a></p>
+                        </div>
+                        <div class="d-flex justify-content-center links ml-1">
+                            <p><a href="{% url 'authentication:resetPassword' %}" class="ml-2">비밀번호 재설정</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <div class="ads_panel_side px-5 bg-primary" style="width: 25%; height: 700px; margin-top:5%;">
+        <h3 class="text-center">Ads</h3>
+    </div>
+</div>
+
+<!-- <script type="text/javascript">
+    var naver_id_login = new naver_id_login("y118x7mal4_oDlBRqK4r", "http://localhost:8000/authentication/naver_register/");
+    var state = naver_id_login.getUniqState();
+    naver_id_login.setButton("white", 2,50);
+    naver_id_login.setDomain("http://localhost:8000/");
+    naver_id_login.setState(state);
+    naver_id_login.setPopup();
+    naver_id_login.init_naver_id_login();
+</script> -->
+{% endblock %}

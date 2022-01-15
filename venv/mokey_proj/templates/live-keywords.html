@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="d-flex flex-row justify-content-around">
+    <div class="ads_panel_side px-5 bg-primary" style="width: 30%; height: 700px; margin-top:5%;">
+        <h3 class="text-center">Ads</h3>
+    </div>
+    <style>
+        .ads_panel_side {
+            position: sticky;
+            top: 10%;
+            z-index: 100;
+        }
+    </style>
+
+    <main role="main" class="inner cover text-center mb-5 pb-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">인기검색어</li>
+            </ol>
+        </nav>
+        <div class="row ads_panel_main bg-primary">
+            <h3 class="text-center">Ads</h3>
+        </div>
+        <div class="row" id="live_keyword_page_pc">
+            <div class="col-12 mt-4 px-1 border">
+                <p class="text-start pl-5"><strong>{{today}}</strong> 급상승 검색어</p>
+                {% for data in live_keywords %}
+                <div class="d-flex flex-row justify-content-between mx-1 mb-1 px-1 py-3 border"
+                    style="background-color: rgb(243, 243, 243);">
+                    {% if data.ranking == '1' %}
+                    <h3 class="pt-5 ml-3 text-danger"><strong>{{data.ranking}}</strong></h3>
+                    {% elif data.ranking == '2' %}
+                    <h3 class="pt-5 ml-3 text-danger"><strong>{{data.ranking}}</strong></h3>
+                    {% elif data.ranking == '3' %}
+                    <h3 class="pt-5 ml-3 text-danger"><strong>{{data.ranking}}</strong></h3>
+                    {% else %}
+                    <h3 class="pt-5 ml-3 text-dark"><strong>{{data.ranking}}</strong></h3>
+                    {% endif %}
+                    <div class="mt-3">
+                        <h3><strong><a class="links text-dark"
+                                    href="{% url 'search_l2' data.keyword %}">{{data.keyword}}</a></strong></h3>
+                        <hr>
+                        <div>
+                            <p><a class="text-primary" href="{{data.keywordNewsLink}}">{{data.keywordNewsTitle}}</a></p>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="pt-5 mr-3 text-dark"><strong>{{data.amount}}</strong></h5>
+                        <p class="text-muted">검색량</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2790_RC04/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderWidget("dailytrends", "", {"geo":"KR","guestPath":"https://trends.google.ae:443/trends/embed/"}); </script> -->
+        </div>
+        <div class="" id="live_keyword_page_mobile">
+            <div class="col-6 mr-5">
+                <!-- <img id="wc_image" src="/static/image/output_live_keywords_{{today}}.png" alt=""> -->
+            </div>
+            <div class="col-12 mt-4 w-100">
+                <p>{{today}} 급상승 검색어</p>
+                <table class="table table-hover table-sm table-responsive-sm">
+                    <thead class="">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col" width="80%"><strong>키워드</strong></th>
+                            <th scope="col">검색량</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for live_keyword in live_keywords %}
+                        <tr>
+                            {% if live_keyword.ranking == '1'%}
+                            <td>
+                                <h5 style="color : rgb(241, 85, 85);"><strong>{{live_keyword.ranking}}</strong></h5>
+                            </td>
+                            {% elif live_keyword.ranking == '2'%}
+                            <td>
+                                <h5 style="color : rgb(241, 85, 85);"><strong>{{live_keyword.ranking}}</strong></h5>
+                            </td>
+                            {% elif live_keyword.ranking == '3'%}
+                            <td>
+                                <h5 style="color : rgb(241, 85, 85);"><strong>{{live_keyword.ranking}}</strong></h5>
+                            </td>
+                            {% else %}
+                            <td>
+                                <h5 class="text-dark"><strong>{{live_keyword.ranking}}</strong></h5>
+                            </td>
+                            {% endif %}
+                            <td><a class="text-primary" href="{% url 'search_l2' live_keyword.keyword %}"
+                                    target="_blank"
+                                    style="color:black; text-decoration: none;">{{live_keyword.keyword}}</a></td>
+                            <td><strong class="text-dark">{{live_keyword.amount}}</strong></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <div class="ads_panel_side px-5 bg-primary" style="width: 30%; height: 700px; margin-top:5%;">
+        <h3 class="text-center">Ads</h3>
+    </div>
+</div>
+
+{% endblock %}
