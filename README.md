@@ -28,8 +28,8 @@
   - 양 옆에 광고 붙이기(먼저 쿠팡 광고로 시작)
 
 # 백업 
-  - data/Dajango_project/14_mokey(GIT) : 백업
-  - /home/ys/project/Django/14_mokey(GIT) : 작업
+  - data/Dajango_project/14_1_mokey_backup(GIT) : 백업
+  - /home/ys/project/Django/14_mokey_deploy(GIT) : 작업
 
 # 프로젝트 진행 과정
  2021.12.22
