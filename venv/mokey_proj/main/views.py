@@ -727,6 +727,14 @@ def expandKeyword_js(request):
                         'pubAmount':pubAmount,
                         'keywordRating':keywordRating,
                     }
+                    Mainkw.objects.create(
+                        keyword=keyword,                                    
+                        searchPC=monthlyPcQcCnt,                            
+                        searchMOBILE=monthlyMobileQcCnt,                            
+                        kwQuality=keywordRating,                
+                        created_on=today,               
+                        pubAmountTotalBlog=pubAmount,                
+                        )
                     ExpandKeyword.objects.create(main_keyword=keyword, keyword=data, searchPC=monthlyPcQcCnt, searchMOBILE=monthlyMobileQcCnt, pubAmountTotal=pubAmount, kwQuality=keywordRating)
                     result_list.append(result_dict)
                 result_list_filtered=sorted(result_list, key=lambda x:x.get('keywordRating'))        
