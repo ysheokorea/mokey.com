@@ -50,7 +50,6 @@ import csv
 
 import random
 
-
 today=datetime.now().strftime('%Y-%m-%d')
 
 # Create your views here.
