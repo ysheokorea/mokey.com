@@ -132,6 +132,11 @@
   #search_title_sub_mobile{
     display:block;
   }
+
+  /* footer */
+  #bottom_content{
+    display:none;
+  }
   /* #search_keyword_desktop{
     display:none;
   }
@@ -363,9 +368,12 @@ body {
  * Footer
  */
 .mastfoot {
-  color: white;
-  background: linear-gradient(to right, #8f0f24, rgb(4, 0, 54));
+  color: linear-gradient(to right, #8f0f24, rgb(4, 0, 54));
+  background: white;
   opacity:80%;
+  margin-top:100px;
+  position:relative;
+  bottom:0;
 }
 
 /* Ads Panel */

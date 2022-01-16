@@ -72,10 +72,10 @@ def search(request):
         start = time.time()    
         keyword=json.loads(request.body).get('textVal') # javascript fetch() 데이터 받아옴
         print("keyword : |",keyword,"|")
-        if len(keyword)>0:
-            # Mainkw DB에 새로운 키워드를 찾은 경우 
-            print("=== Keyword is new one. ===")
-            print("level 1 : START") # Debugging Lv 1
+        # Mainkw DB에 새로운 키워드를 찾은 경우 
+        print("=== Keyword is new one. ===")
+        print("level 1 : START") # Debugging Lv 1
+        if len(keyword)>1:
             # 키워드 조회 시작함
             try:
                 keyword_search_lists = naverAdsAPI(keyword) # 네이버검색광고 API 검색량 조회 
@@ -173,6 +173,8 @@ def search(request):
                             kwQuality=keywordRating,
                             )
                     print("level 5 -- keyword Exists || Updated")         
+            else:
+                print("level 5 -- 검색량이 너무 작습니다")
 
             # 검색 히스토리 DB 등록
             try:
@@ -234,7 +236,7 @@ def search(request):
                         'monthlyPcQcCnt':0,
                         'monthlyMobileQcCnt':0,
                         'mothlyTotal':0,
-                        'relKeyword':'None',
+                        'relKeyword':keyword,
                         'blog_total_count':0,
                         'knin_total_count':0,
                         'keywordRating':'Error',
@@ -248,14 +250,14 @@ def search(request):
                     return JsonResponse(context, safe=False)   
             else:
                 context = {
-                'monthlyPcQcCnt':0,
-                'monthlyMobileQcCnt':0,
-                'mothlyTotal':0,
-                'relKeyword':'None',
-                'blog_total_count':0,
-                'knin_total_count':0,
-                'keywordRating':'Error',
-                'keyword_search_lists':[],
+                'monthlyPcQcCnt':monthlyPcQcCnt,
+                'monthlyMobileQcCnt':monthlyMobileQcCnt,
+                'mothlyTotal':monthlyPcQcCnt+monthlyMobileQcCnt,
+                'relKeyword':keyword,
+                'blog_total_count':blog_total_count,
+                'knin_total_count':knin_total_count,
+                'keywordRating':keywordRating,
+                'keyword_search_lists':keyword_search_lists_filtered[:100],
                 'period':period,
                 'trend':trend,
                 'period_year':period_year,
@@ -267,16 +269,15 @@ def search(request):
             time_elapsed=timedelta(seconds=end-start)
             print(time_elapsed)
             return JsonResponse(context, safe=False)
-            
         else:
             context = {
                 'monthlyPcQcCnt':0,
                 'monthlyMobileQcCnt':0,
                 'mothlyTotal':0,
-                'relKeyword':'None',
+                'relKeyword':keyword,
                 'blog_total_count':0,
                 'knin_total_count':0,
-                'keywordRating':'Null',
+                'keywordRating':'검색어 없음',
                 'keyword_search_lists':[],
                 'period':[],
                 'trend':[],
@@ -637,12 +638,22 @@ def search_l(request):
     """
     if request.method=="GET":
         keyword=request.GET["search_keyword"]
-        print(keyword)
-        return render(request, 'search_l.html', {'keyword':keyword})
+        if len(keyword)==0 or keyword==' ' or keyword=='  ' or keyword=='   ':
+            keyword=''
+        context={
+            'keyword':keyword,
+            'keyword_length':len(keyword),
+        }
+        return render(request, 'search_l.html', context)
     if request.method=="POST":  
         keyword=request.POST['search_keyword']  
-        print(keyword)
-        return render(request, 'search_l.html', {'keyword':keyword})
+        if len(keyword)==0 or keyword==' ' or keyword=='  ' or keyword=='   ':
+            keyword=''
+        context={
+            'keyword':keyword,
+            'keyword_length':len(keyword),
+        }
+        return render(request, 'search_l.html', context)
 
 @csrf_exempt
 def search_l2(request, kw):

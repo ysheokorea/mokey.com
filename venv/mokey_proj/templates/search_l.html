@@ -15,7 +15,7 @@
         }
     </style>
 
-    <main role="main" class="inner cover text-center mb-5 pb-5">
+    <main role="main" class="inner cover text-center">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
@@ -59,8 +59,9 @@
         <h1 style="color:green">{{time_elapsed}}</h1>
         <div class="row mt-1 text-center" id="content">
             <div class="alert alert-success mb-3" role="alert">
-                {% if relKeyword == 'none' %}
-                <h3><strong id="relKeyword"> 검색어를 다시 확인해주세요 </strong></h3>
+                {% if keyword_length < 1 %}
+                <h3><strong id="relKeyword"></strong></h3>
+                <h3><strong id="">검색어를 입력해주세요</strong></h3>
                 {% else %}
                 <div style="font-size:20px;"><strong id="relKeyword">{{keyword}}</strong> 검색결과</div>
                 {% endif %}

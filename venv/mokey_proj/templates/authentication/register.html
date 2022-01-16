@@ -4,70 +4,89 @@
 
 {% block content %}
 
-<main>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Register</li>
-        </ol>
-    </nav>
-	<div class="container" style="margin-top:70px;">
-		<div class="d-flex justify-content-center" style="height:70%;">
-			<div class="user_card">
-				<div class="d-flex justify-content-center">
-					<h3 id="form-title">회원가입</h3>
-				</div>
-				<div class="d-flex justify-content-center form_container">
+<div class="d-flex flex-row justify-content-around">
+	<div class="ads_panel_side px-5 bg-primary" style="width: 25%; height: 700px; margin-top:5%;">
+		<h3 class="text-center">Ads</h3>
+	</div>
+	<style>
+		.ads_panel_side {
+			position: sticky;
+			top: 10%;
+			z-index: 100;
+		}
+	</style>
 
-					<form method="POST" action="">
-                        {% csrf_token %}
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text bg-dark"><i class="fas fa-user"></i></span>
-							</div>
-							{{form.username}}
-						</div>
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text bg-dark"><i class="fas fa-envelope-square"></i></span>
-							</div>
-							{{form.email}}
-						</div>
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text bg-dark"><i class="fas fa-key"></i></span>
-							</div>
-							{{form.password1}}
-						</div>
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text bg-dark"><i class="fas fa-key"></i></span>
-							</div>
-							{{form.password2}}
-						</div>
+	<main>
 
-                        <div class="row d-flex flex-column my-1">
-                            <div class="row mt-1 w-100 px-3 m-0">
-                                <input class="btn btn-dark btn-sm d-flex flex-row justify-content-center" type="submit" value="회원가입">
-                            </div>
-                        </div>
-					</form>
-				</div>
-                
-                {% for message in messages %}
-                    <p id="messages">{{message}}</p>
-                {% endfor %}
-		
-				<div class="mt-4 d-flex flex-row justify-content-center">
-					<div class="links mr-4">
-						<a href="{% url 'authentication:user_login' %}" class="">로그인</a>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Register</li>
+			</ol>
+		</nav>
+		<div class="container" style="margin-top:70px;">
+			<div class="d-flex justify-content-center" style="height:70%;">
+				<div class="user_card">
+					<div class="d-flex justify-content-center">
+						<h3 id="form-title">회원가입</h3>
 					</div>
-					<div class="d-flex justify-content-center links">
-						<a href="{% url 'authentication:resetPassword' %}" class="">비밀번호 재설정</a>
+					<div class="d-flex justify-content-center form_container">
+
+						<form method="POST" action="">
+							{% csrf_token %}
+							<div class="input-group mb-2">
+								<div class="input-group-append">
+									<span class="input-group-text bg-dark"><i class="fas fa-user"></i></span>
+								</div>
+								{{form.username}}
+							</div>
+							<div class="input-group mb-2">
+								<div class="input-group-append">
+									<span class="input-group-text bg-dark"><i class="fas fa-envelope-square"></i></span>
+								</div>
+								{{form.email}}
+							</div>
+							<div class="input-group mb-2">
+								<div class="input-group-append">
+									<span class="input-group-text bg-dark"><i class="fas fa-key"></i></span>
+								</div>
+								{{form.password1}}
+							</div>
+							<div class="input-group mb-2">
+								<div class="input-group-append">
+									<span class="input-group-text bg-dark"><i class="fas fa-key"></i></span>
+								</div>
+								{{form.password2}}
+							</div>
+
+							<div class="row d-flex flex-column my-1">
+								<div class="row mt-1 w-100 px-3 m-0">
+									<input class="btn btn-dark btn-sm d-flex flex-row justify-content-center"
+										type="submit" value="회원가입">
+								</div>
+							</div>
+						</form>
+					</div>
+
+					{% for message in messages %}
+					<p id="messages">{{message}}</p>
+					{% endfor %}
+
+					<div class="mt-4 d-flex flex-row justify-content-center">
+						<div class="links mr-4">
+							<a href="{% url 'authentication:user_login' %}" class="">로그인</a>
+						</div>
+						<div class="d-flex justify-content-center links">
+							<a href="{% url 'authentication:resetPassword' %}" class="">비밀번호 재설정</a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</main>
+
+	<div class="ads_panel_side px-5 bg-primary" style="width: 25%; height: 700px; margin-top:5%;">
+		<h3 class="text-center">Ads</h3>
 	</div>
-</main>
+</div>
 {% endblock %}
