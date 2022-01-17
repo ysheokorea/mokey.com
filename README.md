@@ -63,3 +63,6 @@
   - AWS 배포 진행 중 uWSGI + Nginx 설정 에러발생
   - Youtube 보고 진행 중
 
+2022.01.17
+   - AWS 배포 진행중
+   - Nginx, uWSGI, unix socket, Django
