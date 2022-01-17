@@ -727,20 +727,21 @@ def expandKeyword_js(request):
                         'pubAmount':pubAmount,
                         'keywordRating':keywordRating,
                     }
-                    Mainkw.objects.create(
-                        keyword=keyword,                                    
-                        searchPC=monthlyPcQcCnt,                            
-                        searchMOBILE=monthlyMobileQcCnt,                            
-                        kwQuality=keywordRating,                
-                        created_on=today,               
-                        pubAmountTotalBlog=pubAmount,                
-                        )
+                    try:
+                        Mainkw.objects.create(
+                            keyword=keyword,                                    
+                            searchPC=monthlyPcQcCnt,                            
+                            searchMOBILE=monthlyMobileQcCnt,                            
+                            kwQuality=keywordRating,                
+                            created_on=today,               
+                            pubAmountTotalBlog=pubAmount,                
+                            )
+                    except:
+                        pass
                     ExpandKeyword.objects.create(main_keyword=keyword, keyword=data, searchPC=monthlyPcQcCnt, searchMOBILE=monthlyMobileQcCnt, pubAmountTotal=pubAmount, kwQuality=keywordRating)
                     result_list.append(result_dict)
                 result_list_filtered=sorted(result_list, key=lambda x:x.get('keywordRating'))        
-                # context={
-                #     'result_list':result_list_filtered,
-                # }
+                
                 end = time.time()
                 time_elapsed=timedelta(seconds=end-start)
                 print(time_elapsed)
