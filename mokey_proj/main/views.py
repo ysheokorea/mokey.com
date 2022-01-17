@@ -738,10 +738,13 @@ def expandKeyword_js(request):
                             )
                     except:
                         pass
-                    ExpandKeyword.objects.create(main_keyword=keyword, keyword=data, searchPC=monthlyPcQcCnt, searchMOBILE=monthlyMobileQcCnt, pubAmountTotal=pubAmount, kwQuality=keywordRating)
+                    try:
+                        ExpandKeyword.objects.create(main_keyword=keyword, keyword=data, searchPC=monthlyPcQcCnt, searchMOBILE=monthlyMobileQcCnt, pubAmountTotal=pubAmount, kwQuality=keywordRating)
+                    except:
+                        pass
                     result_list.append(result_dict)
                 result_list_filtered=sorted(result_list, key=lambda x:x.get('keywordRating'))        
-                
+
                 end = time.time()
                 time_elapsed=timedelta(seconds=end-start)
                 print(time_elapsed)
