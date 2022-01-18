@@ -728,14 +728,15 @@ def expandKeyword_js(request):
                         'keywordRating':keywordRating,
                     }
                     try:
-                        Mainkw.objects.create(
-                            keyword=keyword,                                    
-                            searchPC=monthlyPcQcCnt,                            
-                            searchMOBILE=monthlyMobileQcCnt,                            
-                            kwQuality=keywordRating,                
-                            created_on=today,               
-                            pubAmountTotalBlog=pubAmount,                
-                            )
+                        if keywordRating.find('A'):
+                            Mainkw.objects.create(
+                                keyword=keyword,                                    
+                                searchPC=monthlyPcQcCnt,                            
+                                searchMOBILE=monthlyMobileQcCnt,                            
+                                kwQuality=keywordRating,                
+                                created_on=today,               
+                                pubAmountTotalBlog=pubAmount,                
+                                )
                     except:
                         pass
                     try:
