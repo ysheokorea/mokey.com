@@ -765,14 +765,14 @@ def expandKeywordScraper(keyword):
         options.add_argument('headless')
         options.add_argument('window-size=1920x1080')
         options.add_argument("disable-gpu")
-        driver = webdriver.Chrome('/home/ubuntu/Downloads/chromedriver', chrome_options=options) # 크롬 웹 드라이버
+        driver = webdriver.Chrome('/usr/bin/chromedriver', chrome_options=options) # 크롬 웹 드라이버
     except:
         pass
     
     keyword=urllib.parse.quote(keyword)
     tags=[]
     urls=[]
-    
+
     # 블로그 섹션 첫 페이지 수집 
     try:
         url=f'https://section.blog.naver.com/Search/Post.naver?pageNo=1&rangeType=ALL&orderBy=sim&keyword={keyword}'
@@ -838,7 +838,7 @@ def blogAnaylize_js(request):
             options.add_argument('headless')
             options.add_argument('window-size=1920x1080')
             options.add_argument("disable-gpu")
-            driver = webdriver.Chrome('/home/ys/project/chromedriver', chrome_options=options) # 크롬 웹 드라이버
+            driver = webdriver.Chrome('/usr/bin/chromedriver', chrome_options=options) # 크롬 웹 드라이버
         except:
             pass
         
