@@ -765,7 +765,7 @@ def expandKeywordScraper(keyword):
         options.add_argument('headless')
         options.add_argument('window-size=1920x1080')
         options.add_argument("disable-gpu")
-        driver = webdriver.Chrome('/usr/bin/chromedriver', chrome_options=options) # 크롬 웹 드라이버
+        driver = webdriver.Chrome('/home/ubuntu/Downloads/chromedriver', chrome_options=options) # 크롬 웹 드라이버
     except:
         pass
     
