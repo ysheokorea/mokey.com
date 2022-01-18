@@ -728,7 +728,7 @@ def expandKeyword_js(request):
                         'keywordRating':keywordRating,
                     }
                     try:
-                        if keywordRating.find('A'):
+                        if 'A' in keywordRating:
                             Mainkw.objects.create(
                                 keyword=keyword,                                    
                                 searchPC=monthlyPcQcCnt,                            
