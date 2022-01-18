@@ -730,7 +730,7 @@ def expandKeyword_js(request):
                     try:
                         if 'A' in keywordRating:
                             Mainkw.objects.create(
-                                keyword=keyword,                                    
+                                keyword=data,                                    
                                 searchPC=monthlyPcQcCnt,                            
                                 searchMOBILE=monthlyMobileQcCnt,                            
                                 kwQuality=keywordRating,                
