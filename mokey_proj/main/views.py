@@ -772,7 +772,7 @@ def expandKeywordScraper(keyword):
     keyword=urllib.parse.quote(keyword)
     tags=[]
     urls=[]
-
+    
     # 블로그 섹션 첫 페이지 수집 
     try:
         url=f'https://section.blog.naver.com/Search/Post.naver?pageNo=1&rangeType=ALL&orderBy=sim&keyword={keyword}'
