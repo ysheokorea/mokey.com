@@ -104,6 +104,27 @@
   #recommend_keywords_mobile{
     display:none;
   }
+
+  /* expand keyword */ 
+  #expand_search_keyword_pc{
+    display:block;
+  }
+  #expand_search_keyword_mobile{
+    display:none;
+  }
+  #expand_btn_keywords_pc{
+    display:block;
+  }
+  #expand_btn_keywords_mobile{
+    display:none;
+  }
+  #expand_keywords_pc{
+    display:block;
+  }
+  #expand_keywords_mobile{
+    display:none;
+  }
+
 }
 
 /* MOBILE 해상도 */
@@ -264,6 +285,27 @@
     display:block;
   }
 
+  /* expand keyword */ 
+  #expand_search_keyword_pc{
+    display:none;
+  }
+  #expand_search_keyword_mobile{
+    display:block;
+  }
+  #expand_btn_keywords_pc{
+    display:none;
+  }
+  #expand_btn_keywords_mobile{
+    display:block;
+  }
+  #expand_keywords_pc{
+    display:none;
+  }
+  #expand_keywords_mobile{
+    display:block;
+  }
+
+
   /* history counter */
   #hisotryCounter{
     display:none;
@@ -383,11 +425,11 @@ body {
   /* width:20%;
   height: 700px;
   margin-top:5%; */
-  visibility: hidden;
+  visibility: visible;
 }
 .ads_panel_main{
   height:200px;
-  display:none !important;
+  display:block !important;
 }
 
 /* 
