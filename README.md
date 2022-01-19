@@ -66,3 +66,14 @@
 2022.01.17
    - AWS 배포 진행중
    - Nginx, uWSGI, unix socket, Django
+
+2022.01.18
+   - AWS 배포 완료
+   - 가비아 도메인 등록완료 [https://www.mokey.net]
+
+2022.01.19
+   - AWS 배포 완료
+   - COUPANG Partners 배너 배치 완료
+   - uWSGI connection timeout Error PATCH 완료
+   - Google Analytics + Google Search Console + Naver Search Advisor 등록완료
+  
