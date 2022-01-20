@@ -25,6 +25,7 @@ urlpatterns = [
     path('blogAnaylize_js', csrf_exempt(views.blogAnaylize_js), name='blogAnaylize_js'),
 
     path('history', views.keywordHistory, name='keywordHistory'),
+    path('search-l2/history', views.keywordHistory, name='keywordHistory2'),
     path('del-history', views.delete_history, name='delete_history'),
 
 
