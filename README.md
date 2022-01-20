@@ -77,3 +77,8 @@
    - uWSGI connection timeout Error PATCH 완료
    - Google Analytics + Google Search Console + Naver Search Advisor 등록완료
   
+2022.01.20
+   - [Closed]Naver API Client Key / Application 정리(mokey.net)
+   - [Closed]Naver API 앱 검수 요청
+   - [Closed]키워드 추천 관리자 모드 화면 추가
+   - [Open] search-l2/history javascript fetch 안되는 문제
