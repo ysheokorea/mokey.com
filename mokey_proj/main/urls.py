@@ -8,7 +8,8 @@ urlpatterns = [
     path('search-l2/search', views.search, name='search2'),
 
     path('live-keyword', views.live_keyword, name='live_keyword'),
-    path('recomm-keyword', views.recommend_keywords, name='recommend_keywords'),
+    path('recomm-keyword', views.recommend_keywords, name='recommend_keywords'), 
+    path('recomm-admin', views.recommend_admin, name='recommend_admin'),
 
     path('ranking-news', views.ranking_news, name="ranking_news"),
 
