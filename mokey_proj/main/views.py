@@ -616,6 +616,28 @@ def recommend_keywords(request):
     
     return render(request, 'recommend_keywords.html', context)
 
+@login_required(login_url='authentication:user_login')
+@staff_member_required
+def recommend_admin(request):
+    """
+    # 기능 : 등급별 키워드 조회
+    """
+    if request.method=="GET":
+        return render(request, 'recommend_admin.html')
+    if request.method=="POST":
+        keyword_input=request.POST['recomm_input']
+        keyword_rating=request.POST.get('recomm_rating')
+        print(keyword_input)
+        print(keyword_rating)
+        recomm_lists = Mainkw.objects.filter(keyword__icontains=keyword_input, kwQuality__icontains=keyword_rating).order_by('kwQuality')
+        
+        context = {
+            'recomm_lists':recomm_lists,
+            'recomm_lists_count':str(len(recomm_lists))+ "건 조회되었습니다",
+            }
+
+        return render(request, 'recommend_admin.html' , context)
+
 def ranking_news(request):
     """
     # 목적 : 추천 뉴스 화면 Rendering

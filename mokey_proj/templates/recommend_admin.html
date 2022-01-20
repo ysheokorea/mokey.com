@@ -28,21 +28,30 @@
             <iframe src="https://ads-partners.coupang.com/widgets.html?id=550317&template=carousel&trackingCode=AF2013773&subId=&width=680&height=150" width="680" height="150" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
         </div>
         <div class="d-flex flex-column">
-            <div class="row my-3">
+            <div class="row my-3 p-2 border">
                 <div class="col">
-                    <form action="{% url 'recommend_keywords' %}" , method="POST">
+                    <form action="{% url 'recommend_admin' %}" , method="POST">
                         {% csrf_token %}
-                        <button type="submit" id="recomm_keywords" class="btn btn-primary" style="width:70%;">
-                            <strong>키워드추천 받기</strong>
+                        <input class="form-control mx-auto" type="text" name="recomm_input" placeholder="키워드를 입력하세요" title="공백으로 검색 시 키워드 등급으로 조회됩니다" style="width:70%;">
+                        <select class="form-control mx-auto my-2" name="recomm_rating" id="" style="width:70%;">
+                            <option class="text-muted" value=""><span class="text-muted">등급을 선택하세요</span></option>
+                            <option value="A">A 등급(A+, A, A-)</option>
+                            <option value="B">B 등급(B+, B, B-)</option>
+                            <option value="C">C 등급(C+, C, C-)</option>
+                        </select>
+                        <button type="submit" id="recomm_keywords" class="btn btn-warning" style="width:70%;">
+                            <strong>황금 키워드 조회</strong>
                         </button>
                     </form>
-                    {% if request.user.is_staff %}
-                    <button class="btn btn-success mt-2" onclick="location.href=`{% url 'recommend_admin' %}`" style="width:70%;"><strong>관리자 모드 전환</strong></button>
-                    {% endif %}
                 </div>
             </div>
             <div class="row my-1">
                 <div class="col" id="recommend_keywords_pc">
+                    <div class="row mt-1 text-center" id="content">
+                        <div class="alert alert-success mb-3" role="alert">
+                            <div style="font-size:20px;"><strong id="relKeyword">{{recomm_lists_count}}</strong></div>
+                        </div>
+                    </div>
                     <table class="table table-striped table-bordered table-hover table-sm">
                         <thead class="table">
                             <tr>
