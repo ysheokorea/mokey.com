@@ -358,8 +358,8 @@ def getDataLabMomentum(keyword,device):
         # 구분 : PC / MOBILE
         # 기능 : 전체 검색량 추이 검색
     """
-    client_id = "6VoUNGAhakubFaUzyF7N"
-    client_secret = "WS7UXEH4xX"
+    client_id = "y118x7mal4_oDlBRqK4r"
+    client_secret = "U934zQQSpn"
 
     now=datetime.now()
     today=now.strftime('%Y-%m-%d')
@@ -404,8 +404,8 @@ def getDataLabMomentumMonth(keyword):
     # 이름 : Naver SearchTrend API 사용
     # 기능 : 월 검색량 추이 검색
     """
-    client_id = "6VoUNGAhakubFaUzyF7N"
-    client_secret = "WS7UXEH4xX"
+    client_id = "y118x7mal4_oDlBRqK4r"
+    client_secret = "U934zQQSpn"
 
     period_list=[]
     trend_list=[]
@@ -520,8 +520,8 @@ def naverSearchAPI_blog(keyword):
     """
     response_body_dict = {}
 
-    client_id = "6VoUNGAhakubFaUzyF7N"
-    client_secret = "WS7UXEH4xX"
+    client_id = "y118x7mal4_oDlBRqK4r"
+    client_secret = "U934zQQSpn"
     query = urllib.parse.quote(keyword)
     display = 1
     start = 1
@@ -545,8 +545,8 @@ def naverSearchAPI_kin(keyword):
     """
     response_body_dict = {}
 
-    client_id = "6VoUNGAhakubFaUzyF7N"
-    client_secret = "WS7UXEH4xX"
+    client_id = "y118x7mal4_oDlBRqK4r"
+    client_secret = "U934zQQSpn"
     query = urllib.parse.quote(keyword)
     display = 1
     start = 1
@@ -570,8 +570,8 @@ def naverSearchAPI_cafe(keyword):
     """
     response_body_dict = {}
 
-    client_id = "6VoUNGAhakubFaUzyF7N"
-    client_secret = "WS7UXEH4xX"
+    client_id = "y118x7mal4_oDlBRqK4r"
+    client_secret = "U934zQQSpn"
     query = urllib.parse.quote(keyword)
     display = 1
     start = 1
@@ -633,7 +633,7 @@ def recommend_admin(request):
         
         context = {
             'recomm_lists':recomm_lists,
-            'recomm_lists_count':str(len(recomm_lists))+ "건 조회되었습니다",
+            'recomm_lists_count':str(len(recomm_lists))+ "건조회되었습니다",
             }
 
         return render(request, 'recommend_admin.html' , context)
