@@ -10,7 +10,7 @@ function enterPress(f){
 function getHistoryCount(){
     const hisotryCounter=document.getElementById("hisotryCounter");
     hisotryCounter.innerHTML="";
-    fetch('history',{
+    fetch('/history',{
         method:"POST",
         headers:{
             'Content-Type':'application/json',
