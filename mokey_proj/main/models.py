@@ -68,7 +68,7 @@ class Newskw(models.Model):
     class Meta:
         db_table = 'newskw'
         constraints=[
-            models.UniqueConstraint(fields=['title','link','newskwImage'], name='unique newskw')
+            models.UniqueConstraint(fields=['title','link'], name='unique newskw')
         ]
 
 class KeywordHistory1(models.Model):
