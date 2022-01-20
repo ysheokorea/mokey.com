@@ -1,4 +1,6 @@
 const spinner = document.getElementById("spinner");
+const spinner_info=document.getElementById("spinner_info");
+
 const search_input_bx = document.getElementById("search_input_bx");
 const content = document.getElementById("content");
 content.style.visibility = 'hidden';
@@ -47,6 +49,7 @@ function search_fetch_desktop(){
         .then((res) => res.json())
         .then((result) => {
             spinner.classList.add('no-display');
+            spinner_info.classList.add('no-display');
             content.style.visibility = 'visible';
             search_input_bx.style.visibility = 'visible';
             monthlyPcQcCnt_desktop.innerHTML += `
@@ -97,6 +100,7 @@ function search_fetch_mobile(){
         .then((res) => res.json())
         .then((result) => {
             spinner.classList.add('no-display');
+            spinner_info.classList.add('no-display');
             content.style.visibility = 'visible';
             search_input_bx.style.visibility = 'visible';
             monthlyPcQcCnt_mobile.innerHTML += `
@@ -453,84 +457,3 @@ if (window.matchMedia("(min-width: 850px)").matches) {
     search_fetch_del_mobile();
     search_fetch_mobile();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function search_fetch_desktop(){
-//     fetch('search', {
-//         body: JSON.stringify({ textVal: textVal }),
-//         method: "POST",
-//         })
-//         .then((res) => res.json())
-//         .then((result) => {
-//             spinner.classList.add('no-display');
-//             content.style.visibility = 'visible';
-//             search_input_bx.style.visibility = 'visible';
-//             monthlyPcQcCnt_desktop.innerHTML += `
-//                 <div class=""><i class="fas fa-desktop"></i><br><strong>${result.monthlyPcQcCnt.toLocaleString('en-US')}</strong></div>
-//             `;
-//             monthlyMobileQcCnt_desktop.innerHTML += `
-//                 <div class=""><i class="fas fa-mobile-alt"></i><br><strong>${result.monthlyMobileQcCnt.toLocaleString('en-US')}</strong></div>
-//             `;
-//             mothlyTotal_desktop.innerHTML += `
-//                 <div class=""><i class="fas fa-equals"></i><br><strong>${result.mothlyTotal.toLocaleString('en-US')}</strong></div> 
-//             `;
-//             blog_total_count.innerHTML += `
-//                 <div class="mb-0 h4">월간 : <strong>${result.blog_month_count.toLocaleString('en-US')}</strong> 건 </div>
-//                 <hr>
-//                 <div class="mb-0 h4">전체 : <strong>${result.blog_total_count.toLocaleString('en-US')}</strong> 건 </div>
-//             `;
-//             if (result.keywordRating > 1) {
-//                 keyword_rating.innerHTML += `
-//                 <h1 class="text-success"><strong>AAA</strong></h1>
-//                 `
-//             }
-//             else if (result.keywordRating > 0.5) {
-//                 keyword_rating.innerHTML += `
-//                 <h1 class="text-success"><strong>BBB</strong></h1>
-//             `
-//             }
-//             else if (result.keywordRating > 0.1) {
-//                 keyword_rating.innerHTML += `
-//                 <h1 class="text-success"><strong>CCC</strong></h1>
-//                 `
-//             }
-//             else {
-//                 keyword_rating.innerHTML += `
-//                 <h1 class="text-success"><strong>DDD</strong></h1>
-//                 `
-//             }
-//             for (var i = 0; i < result.keyword_search_lists.length; i++) {
-//                 relkeyword_table.insertAdjacentHTML('beforeend', `
-//                     <tr>
-//                         <th scope="row">${i}</th>
-//                         <td><a href="/search-l2/${result.keyword_search_lists[i].relKeyword}">${result.keyword_search_lists[i].relKeyword}</a></td>
-//                         <td>${result.keyword_search_lists[i].monthlyPcQcCnt.toLocaleString('en-US')}</td>
-//                         <td>${result.keyword_search_lists[i].monthlyMobileQcCnt.toLocaleString('en-US')}</td>
-//                     </tr>
-
-//             `)
-//         }
-//         const [labelsPC, dataPC, labelsMOBILE, dataMOBILE]=[Object.keys(result['searchPCMomentum']), Object.values(result['searchPCMomentum']), Object.keys(result['searchMOBILEMomentum']), Object.values(result['searchMOBILEMomentum'])]
-//         const [labelsPub, dataPub]=[Object.keys(result['pubAmountTotalMomentum']), Object.values(result['pubAmountTotalMomentum'])]
-//         searchAmount_renderChart(labelsPC, dataPC, labelsMOBILE, dataMOBILE);
-//         searchAmount_renderChart2(labelsPub, dataPub);
-//     })
-// }
