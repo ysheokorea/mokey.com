@@ -719,63 +719,66 @@ def expandKeyword_js(request):
             
             keyword=json.loads(request.body).get('keyword')
             print(keyword, 'JavaScript fetched !')
+            keyword_list=expandKeywordScraper(keyword)
+            print("=== Scrpaer Complete! ===")
+            end1 = time.time()
+            time_elapsed1=timedelta(seconds=end1-start)
+            print(time_elapsed1)
 
-            if ExpandKeyword.objects.filter(main_keyword=keyword).exists():
-                for data in ExpandKeyword.objects.filter(main_keyword=keyword).order_by('kwQuality'):
-                    result_dict={
-                        'keyword':data.keyword,
-                        'monthlyPcQcCnt':data.searchPC,
-                        'monthlyMobileQcCnt':data.searchMOBILE,
-                        'pubAmount':data.pubAmountTotal,
-                        'keywordRating':data.kwQuality,
-                    }
-                    result_list.append(result_dict)
-                return JsonResponse(result_list, safe=False)
+            # if ExpandKeyword.objects.filter(main_keyword=keyword).exists():
+            #     for data in ExpandKeyword.objects.filter(main_keyword=keyword).order_by('kwQuality'):
+            #         result_dict={
+            #             'keyword':data.keyword,
+            #             'monthlyPcQcCnt':data.searchPC,
+            #             'monthlyMobileQcCnt':data.searchMOBILE,
+            #             'pubAmount':data.pubAmountTotal,
+            #             'keywordRating':data.kwQuality,
+            #         }
+            #         result_list.append(result_dict)
+            #     return JsonResponse(result_list, safe=False)
 
-            else:
-                keyword_list=expandKeywordScraper(keyword)
-                
-                for data in keyword_list:
-                    result_dict={}
-                    searchAmountList=naverAdsAPI(data)
-                    monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
-                    monthlyMobileQcCnt=replaceSearchData(searchAmountList[0].get('monthlyMobileQcCnt'))
-                    pubAmount=getPubTotalCounter(data)
-                    keywordRating=ratingKeyword(monthlyPcQcCnt+monthlyMobileQcCnt, pubAmount)
-                    result_dict={
-                        'keyword':data,
-                        'monthlyPcQcCnt':monthlyPcQcCnt,
-                        'monthlyMobileQcCnt':monthlyMobileQcCnt,
-                        'pubAmount':pubAmount,
-                        'keywordRating':keywordRating,
-                    }
-                    try:
-                        if 'A' in keywordRating:
-                            Mainkw.objects.create(
-                                keyword=data,                                    
-                                searchPC=monthlyPcQcCnt,                            
-                                searchMOBILE=monthlyMobileQcCnt,                            
-                                kwQuality=keywordRating,                
-                                created_on=today,               
-                                pubAmountTotalBlog=pubAmount,                
-                                )
-                    except:
-                        pass
-                    try:
-                        ExpandKeyword.objects.create(main_keyword=keyword, keyword=data, searchPC=monthlyPcQcCnt, searchMOBILE=monthlyMobileQcCnt, pubAmountTotal=pubAmount, kwQuality=keywordRating)
-                    except:
-                        pass
-                    result_list.append(result_dict)
-                result_list_filtered=sorted(result_list, key=lambda x:x.get('keywordRating'))        
+            # else:
+            
+            for data in keyword_list:
+                result_dict={}
+                searchAmountList=naverAdsAPI(data)
+                monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
+                monthlyMobileQcCnt=replaceSearchData(searchAmountList[0].get('monthlyMobileQcCnt'))
+                pubAmount=getPubTotalCounter(data)
+                keywordRating=ratingKeyword(monthlyPcQcCnt+monthlyMobileQcCnt, pubAmount)
+                result_dict={
+                    'keyword':data,
+                    'monthlyPcQcCnt':monthlyPcQcCnt,
+                    'monthlyMobileQcCnt':monthlyMobileQcCnt,
+                    'pubAmount':pubAmount,
+                    'keywordRating':keywordRating,
+                }
+                try:
+                    if 'A' in keywordRating:
+                        Mainkw.objects.create(
+                            keyword=data,                                    
+                            searchPC=monthlyPcQcCnt,                            
+                            searchMOBILE=monthlyMobileQcCnt,                            
+                            kwQuality=keywordRating,                
+                            created_on=today,               
+                            pubAmountTotalBlog=pubAmount,                
+                            )
+                except:
+                    pass
+                # try:
+                #     ExpandKeyword.objects.create(main_keyword=keyword, keyword=data, searchPC=monthlyPcQcCnt, searchMOBILE=monthlyMobileQcCnt, pubAmountTotal=pubAmount, kwQuality=keywordRating)
+                # except:
+                #     pass
+                result_list.append(result_dict)
+            result_list_filtered=sorted(result_list, key=lambda x:x.get('keywordRating'))        
 
-                end = time.time()
-                time_elapsed=timedelta(seconds=end-start)
-                print(time_elapsed)
-                return JsonResponse(result_list_filtered, safe=False)
+            end = time.time()
+            time_elapsed=timedelta(seconds=end-start)
+            print(time_elapsed)
+            return JsonResponse(result_list_filtered, safe=False)
         except:
             print(traceback.format_exc())
-            return JsonResponse(list('Failed'), safe=False)
-
+            return JsonResponse('Failed', safe=False)
 
 def expandKeywordScraper(keyword):
     """
@@ -810,7 +813,7 @@ def expandKeywordScraper(keyword):
         print(traceback.format_exc())
 
     # 블로그 노출 리스트 (블로그 섹션 3페이지까지 수집)  
-    for i in range(2,4):
+    for i in range(2,3):
         time.sleep(0.5)
         try:
             url=f'https://section.blog.naver.com/Search/Post.naver?pageNo={i}&rangeType=ALL&orderBy=sim&keyword={keyword}'

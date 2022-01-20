@@ -17,6 +17,8 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.urls import reverse
 from django.core.mail import EmailMessage, message
 
+from django.views.decorators.csrf import csrf_exempt
+
 import threading
 
 # Create your views here.
@@ -66,6 +68,24 @@ def user_register(request):
     context={'form':form}
     return render(request, 'authentication/register.html', context)
 
+@csrf_exempt
+def email_verification(request):
+    if request.method=="POST":
+        from uuid import uuid4
+        email=json.loads(request.body).get('email')
+        token=uuid4()
+        email_subject='[Mokey] 회원가입 인증메일'
+        email_body =             '안녕하세요\n\n'+             '아래 토큰을 복사 후 인증을 완료해주세요\n' +             str(token)
+        email = EmailMessage(
+            # Email Subject
+            email_subject,
+            email_body,
+            'noreply@semycolon.com',
+            [email]
+        )
+        EmailThread(email).start()
+
+        return JsonResponse('success', safe=False)
 
 def naver_user_register(request):
     """
