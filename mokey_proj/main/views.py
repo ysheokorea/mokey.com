@@ -719,23 +719,29 @@ def expandKeyword_js(request):
             
             keyword=json.loads(request.body).get('keyword')
             print(keyword, 'JavaScript fetched !')
+
+
+            if ExpandKeyword.objects.filter(main_keyword=keyword).exists():
+                for data in ExpandKeyword.objects.filter(main_keyword=keyword).order_by('kwQuality'):
+                    result_dict={
+                        'keyword':data.keyword,
+                        'monthlyPcQcCnt':data.searchPC,
+                        'monthlyMobileQcCnt':data.searchMOBILE,
+                        'pubAmount':data.pubAmountTotal,
+                        'keywordRating':data.kwQuality,
+                    }
+                    result_list.append(result_dict)
+                return JsonResponse(result_list, safe=False)
+
+
+
             keyword_list=expandKeywordScraper(keyword)
             print("=== Scraper Complete! ===")
             end1 = time.time()
             time_elapsed1=timedelta(seconds=end1-start)
             print(time_elapsed1)
 
-            # if ExpandKeyword.objects.filter(main_keyword=keyword).exists():
-            #     for data in ExpandKeyword.objects.filter(main_keyword=keyword).order_by('kwQuality'):
-            #         result_dict={
-            #             'keyword':data.keyword,
-            #             'monthlyPcQcCnt':data.searchPC,
-            #             'monthlyMobileQcCnt':data.searchMOBILE,
-            #             'pubAmount':data.pubAmountTotal,
-            #             'keywordRating':data.kwQuality,
-            #         }
-            #         result_list.append(result_dict)
-            #     return JsonResponse(result_list, safe=False)
+            
 
             # else:
             analyize_start=time.time()
@@ -765,10 +771,10 @@ def expandKeyword_js(request):
                             )
                 except:
                     pass
-                # try:
-                #     ExpandKeyword.objects.create(main_keyword=keyword, keyword=data, searchPC=monthlyPcQcCnt, searchMOBILE=monthlyMobileQcCnt, pubAmountTotal=pubAmount, kwQuality=keywordRating)
-                # except:
-                #     pass
+                try:
+                    ExpandKeyword.objects.create(main_keyword=keyword, keyword=data, searchPC=monthlyPcQcCnt, searchMOBILE=monthlyMobileQcCnt, pubAmountTotal=pubAmount, kwQuality=keywordRating)
+                except:
+                    pass
                 result_list.append(result_dict)
             result_list_filtered=sorted(result_list, key=lambda x:x.get('keywordRating'))        
             analyize_end=timedelta(seconds=time.time()-analyize_start)
@@ -1054,7 +1060,7 @@ def expand_export_csv(request, keyword):
     # 목적 : 키워드 확장 csv 파일 다운로드
     """
     response = HttpResponse(content_type = 'text/csv')
-    response['Content-Disposition'] = f'attachment; filename=Mokey_Expand_{keyword}_{today}.csv'
+    response['Content-Disposition'] = f'attachment; filename=Mokey_{str(keyword)}.csv'
     writer=csv.writer(response)
     writer.writerow(['#','키워드','PC 검색량','Mobile 검색량', '전체 발행량', '키워드 등급'])
     datas=ExpandKeyword.objects.filter(main_keyword=keyword).order_by('kwQuality')

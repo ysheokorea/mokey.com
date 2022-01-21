@@ -75,9 +75,6 @@ expand_btn_keywords_pc.addEventListener('click', (e)=>{
     spinner_info.style.display='block'; // spinner info display
     expand_keywords_pc.style.display='none';
     
-    expandKeyword_keyword.style.display='none'; // 키워드 검색결과 display none
-    expandKeyword_content.innerHTML=""; // 키워드 검색결과 display none
-    
     expand_csv_btn.innerHTML=""; // csv button 초기화
     
     /* 버튼 클릭 후 모든 HTML 기능 비활성화 */
@@ -120,7 +117,7 @@ expand_btn_keywords_pc.addEventListener('click', (e)=>{
         expand_keywords_pc.style.display='block';
 
         expandKeyword_content.style.display='block';
-
+        
         /* fetch 완료 후 HTML 기능 재활성화 */
         body_content.style.pointerEvents="auto";
         body_content.style.opacity="100%";
@@ -160,9 +157,6 @@ expand_btn_keywords_mobile.addEventListener('click', (e)=>{
     spinner.style.display='block';
     spinner_info.style.display='block';
     expand_keywords_mobile.style.display='none';
-
-    expandKeyword_keyword.style.display='none';
-    expandKeyword_content.innerHTML=""; // 키워드 검색결과 display none
     
     expand_csv_btn.innerHTML="";
     
@@ -205,7 +199,7 @@ expand_btn_keywords_mobile.addEventListener('click', (e)=>{
         spinner_info.style.display='none';
         expand_keywords_mobile.style.display='block';
 
-        expandKeyword_content.style.display='block';        
+        expandKeyword_content.style.display='block';    
 
         /* fetch 완료 후 HTML 기능 재활성화 */
         body_content.style.pointerEvents="auto";

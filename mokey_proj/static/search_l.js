@@ -1,3 +1,6 @@
+/* Global */
+const mainTitle=document.getElementById("mainTitle");
+
 const spinner = document.getElementById("spinner");
 const spinner_info=document.getElementById("spinner_info");
 
@@ -61,6 +64,8 @@ function getHistoryCount(){
 }
 
 function search_fetch_desktop(){
+    mainTitle.innerHTML=`모키 || ${textVal}`
+
     fetch('search', {
         body: JSON.stringify({ textVal: textVal }),
         method: "POST",
