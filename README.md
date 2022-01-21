@@ -93,3 +93,6 @@
    - [Open]회원가입 E-mail Template 작성
    - [Open]구글 서치콘솔 하부 URL 색인 등록
    - [Open]CRONTAB DB 삭제 로직 구현   
+
+2022.01.22
+   - [Closed] 파이썬 datetime timezone 변경

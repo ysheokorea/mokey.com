@@ -50,7 +50,9 @@ import csv
 
 import random
 
-today=datetime.now().strftime('%Y-%m-%d')
+from pytz import timezone
+
+today=datetime.now(timezone('Asia/Seoul')).strftime('%Y-%m-%d')
 
 # Create your views here.
 
@@ -362,7 +364,6 @@ def getDataLabMomentum(keyword,device):
     client_secret = "U934zQQSpn"
 
     now=datetime.now()
-    today=now.strftime('%Y-%m-%d')
     # keyword=input('검색어를 입력하세요 : ')
 
     period_list=[]
@@ -411,7 +412,6 @@ def getDataLabMomentumMonth(keyword):
     trend_list=[]
 
     now=datetime.now()
-    today=now.strftime('%Y-%m-%d')
     yearAgo=(now-relativedelta(years=1)).strftime('%Y-%m-%d')
     # keyword=input('검색어를 입력하세요 : ')
     
