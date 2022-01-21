@@ -1054,7 +1054,7 @@ def expand_export_csv(request, keyword):
     # 목적 : 키워드 확장 csv 파일 다운로드
     """
     response = HttpResponse(content_type = 'text/csv')
-    response['Content-Disposition'] = f'attachment; filename=Mokey_Expand_{today}.csv'
+    response['Content-Disposition'] = f'attachment; filename=Mokey_Expand_{keyword}_{today}.csv'
     writer=csv.writer(response)
     writer.writerow(['#','키워드','PC 검색량','Mobile 검색량', '전체 발행량', '키워드 등급'])
     datas=ExpandKeyword.objects.filter(main_keyword=keyword).order_by('kwQuality')
