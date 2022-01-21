@@ -739,7 +739,7 @@ def expandKeyword_js(request):
 
             # else:
             
-            for data in keyword_list:
+            for data in keyword_list[:30]:
                 result_dict={}
                 searchAmountList=naverAdsAPI(data)
                 monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
@@ -813,6 +813,7 @@ def expandKeywordScraper(keyword):
         print(traceback.format_exc())
 
     # 블로그 노출 리스트 (블로그 섹션 3페이지까지 수집)  
+    """
     for i in range(2,3):
         time.sleep(0.5)
         try:
@@ -823,7 +824,7 @@ def expandKeywordScraper(keyword):
 
         except:
             print(traceback.format_exc())
-
+    """
     # # 블로그 글 별로 태그 수집로직
     for url in urls:
         time.sleep(0.5)
