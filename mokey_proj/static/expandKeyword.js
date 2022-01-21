@@ -91,7 +91,7 @@ expand_btn_keywords_pc.addEventListener('click', (e)=>{
     if (timeValue==0){
         timeValue=1;
         var widthValue=0;
-        var id=setInterval(frame, 1000);
+        var id=setInterval(frame, 600);
         function frame(){
             if(widthValue>=100){
                 clearInterval(id);
@@ -136,26 +136,29 @@ expand_btn_keywords_pc.addEventListener('click', (e)=>{
             <a href="expand-export-csv/${keyword}"><i class="fas fa-file-csv h5 text-dark"></i></a>
         `;
         expandRelkeyword_table_pc.innerHTML+=`
+    
         <tr>
             <th style="font-size:70%; width:5%; vertical-align:middle;">#</th>
-            <th style="font-size:70%; width:40%; vertical-align:middle;">키워드</th>
-            <th style="font-size:70%; width:10%;">PC 검색량<br>(월)</th>
-            <th style="font-size:70%; width:10%;">Mobie 검색량<br>(월)</th>
-            <th style="font-size:70%; width:10%;">블로그 발행량<br>(전체))</th>
-            <th style="font-size:70%; width:10%;">키워드<br>품질</th>
+            <th style="font-size:70%; width:50%; vertical-align:middle;">키워드</th>
+            <th style="font-size:70%; width:15%;">PC 검색량<br>(월)</th>
+            <th style="font-size:70%; width:15%;">Mobie 검색량<br>(월)</th>
+            <th style="font-size:70%; width:15%;">블로그 발행량<br>(전체))</th>
+            <th style="font-size:70%; width:20%; vertical-align:middle;">등급</th>
         </tr>
-        
+    
         `;
         for(var i=0; i<result.length; i++){
-            expandRelkeyword_table_pc.innerHTML+=`
-            <tr>
-                <th scope="row">${i+1}</th>
-                <td><a href="/search-l2/${result[i].keyword}"><strong>${result[i].keyword}</strong></a></td>
-                <td><strong>${result[i].monthlyPcQcCnt.toLocaleString('en-US')}</strong></td>
-                <td><strong>${result[i].monthlyMobileQcCnt.toLocaleString('en-US')}</strong></td>
-                <td><strong>${result[i].pubAmount.toLocaleString('en-US')}</strong></td>
-                <td class="text-danger"><strong>${result[i].keywordRating}</strong></td>
-            </tr>
+            expandRelkeyword_table_pc.innerHTML+= `
+
+                <tr>
+                    <th style="width:5%;" scope="row">${i+1}</th>
+                    <td style="width:50%;"><a href="/search-l2/${result[i].keyword}"><strong>${result[i].keyword}</strong></a></td>
+                    <td style="width:15%;"><strong>${result[i].monthlyPcQcCnt.toLocaleString('en-US')}</strong></td>
+                    <td style="width:15%;"><strong>${result[i].monthlyMobileQcCnt.toLocaleString('en-US')}</strong></td>
+                    <td style="width:15%;"><strong>${result[i].pubAmount.toLocaleString('en-US')}</strong></td>
+                    <td style="width:20%;" class="text-danger"><strong>${result[i].keywordRating}</strong></td>
+                </tr>
+
         `;
         }
     })

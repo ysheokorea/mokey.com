@@ -738,8 +738,8 @@ def expandKeyword_js(request):
             #     return JsonResponse(result_list, safe=False)
 
             # else:
-            
-            for data in keyword_list[:30]:
+            analyize_start=time.time()
+            for data in keyword_list[:60]:
                 result_dict={}
                 searchAmountList=naverAdsAPI(data)
                 monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
@@ -771,10 +771,18 @@ def expandKeyword_js(request):
                 #     pass
                 result_list.append(result_dict)
             result_list_filtered=sorted(result_list, key=lambda x:x.get('keywordRating'))        
-
+            analyize_end=timedelta(seconds=time.time()-analyize_start)
             end = time.time()
             time_elapsed=timedelta(seconds=end-start)
-            print(time_elapsed)
+            print("======= RESULT ======= ")
+            print(" 키워드 : ", keyword)
+            print(" URL 수집시간 : ", time_elapsed1)
+            print(" 키워드 분석시간 : ", analyize_end)
+            print(" 총 소요시간 : ", time_elapsed)
+            print("====================== ")
+
+            
+
             return JsonResponse(result_list_filtered, safe=False)
         except:
             print(traceback.format_exc())
@@ -813,18 +821,16 @@ def expandKeywordScraper(keyword):
         print(traceback.format_exc())
 
     # 블로그 노출 리스트 (블로그 섹션 3페이지까지 수집)  
-    """
-    for i in range(2,3):
-        time.sleep(0.5)
-        try:
-            url=f'https://section.blog.naver.com/Search/Post.naver?pageNo={i}&rangeType=ALL&orderBy=sim&keyword={keyword}'
-            driver.get(url)
-            sel = Selector(text = driver.page_source)
-            urls+=sel.xpath('//*[@class="desc"]/a[1]/@href').extract()
+    # 작업시간 너무 오래걸림 / 1페이지만 수집함(RAM 1GB 서버 환경에서 어쩔 수 없다)
 
-        except:
-            print(traceback.format_exc())
-    """
+    try:
+        url=f'https://section.blog.naver.com/Search/Post.naver?pageNo={2}&rangeType=ALL&orderBy=sim&keyword={keyword}'
+        driver.get(url)
+        sel = Selector(text = driver.page_source)
+        urls+=sel.xpath('//*[@class="desc"]/a[1]/@href').extract()
+    except:
+        print(traceback.format_exc())
+
     # # 블로그 글 별로 태그 수집로직
     for url in urls:
         time.sleep(0.5)
@@ -837,8 +843,8 @@ def expandKeywordScraper(keyword):
             tags+=temp
         except:
             print(traceback.format_exc())
-
-    return set(tags)
+    driver.quit()
+    return list(set(tags))
 
 @csrf_exempt
 @staff_member_required
@@ -925,7 +931,7 @@ def blogAnaylize_js(request):
             except:
                 print(traceback.format_exc())
                 return JsonResponse(list('failed'), safe=False)
-
+        driver.quit()
         return JsonResponse(result_list, safe=False)
 
 def keywordHistory(request):
