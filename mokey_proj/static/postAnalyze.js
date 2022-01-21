@@ -20,7 +20,7 @@ analyze_post_input.addEventListener('keyup', function(event){
 analyze_post_btn.addEventListener('click', (e)=>{
     e.preventDefault();
     analyze_post_table.innerHTML="";
-    console.log('hello world')
+
     const keyword=analyze_post_input.value;
     analyze_post_input.value=null;
     

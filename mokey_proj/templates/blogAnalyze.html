@@ -66,44 +66,15 @@
                     <table class="table table-striped table-bordered table-hover table-sm">
                         <thead class="table">
                             <tr>
-                                <th style="font-size:70%; width:5%; vertical-align:middle;">#</th>
+                                <th style="font-size:70%; width:10%; vertical-align:middle;">순위</th>
                                 <th style="font-size:70%; width:20%; vertical-align:middle;">글자수</th>
-                                <th style="font-size:70%; width:20%;">이미지 갯수</th>
-                                <th style="font-size:70%; width:20%;">동영상 갯수</th>
-                                <th style="font-size:70%; width:20%;">키워드 반복횟수</th>
+                                <th style="font-size:70%; width:20%; vertical-align:middle;">이미지 개수</th>
+                                <th style="font-size:70%; width:20%; vertical-align:middle;">동영상 개수</th>
+                                <th style="font-size:70%; width:20%; vertical-align:middle;">키워드 반복</th>
                             </tr>
                         </thead>
                         <tbody id="analyze_post_table">
-                            {% for data in result_list %}
-                            <tr>
-                                <th scope="row">{{ forloop.counter }}</th>
-                                <td><strong>{{ data.keyword }}</strong></td>
-                                <td><strong>{{ data.monthlyPcQcCnt | intcomma }}</strong></td>
-                                <td><strong>{{ data.monthlyMobileQcCnt | intcomma }}</strong></td>
-                                <td><strong>{{ data.pubAmount | intcomma }}</strong></td>
-                                <td><strong>{{ data.keywordRating }}</strong></td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col" id="recommend_keywords_mobile">
-                    <table class="table table-striped table-bordered table-hover table-sm">
-                        <thead class="table-dark">
-                            <tr>
-                                <th style="font-size:70%; width:5%">#</th>
-                                <th style="font-size:70%; width:40%; vertical-align:middle;">키워드</th>
-                                <th style="font-size:70%; width:10%;">키워드<br>품질</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for list in recomm_lists %}
-                            <tr>
-                                <th scope="row">{{ forloop.counter }}</th>
-                                <td><strong>{{ list.keyword }}</strong></td>
-                                <td><strong style="color:red;">{{list.kwQuality}}</strong></td>
-                            </tr>
-                            {% endfor %}
+                            <!-- javascript -->
                         </tbody>
                     </table>
                 </div>

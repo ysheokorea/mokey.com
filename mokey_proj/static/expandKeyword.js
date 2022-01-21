@@ -65,21 +65,21 @@ function progress(timeValue){
 
 expand_btn_keywords_pc.addEventListener('click', (e)=>{
     e.preventDefault();
+
+    expandRelkeyword_table_pc.innerHTML=""; // pc 테이블 초기화
     
     const keyword=expand_search_keyword_pc.value; // pc input value 가져오기
     expand_search_keyword_pc.value=null; // pc input value 초기화
     
     spinner.style.display='block'; // spinner display
     spinner_info.style.display='block'; // spinner info display
-    expandRelkeyword_table_pc.style.display='none'; // pc 테이블 display none
     expand_keywords_pc.style.display='none';
     
-    expandKeyword_content.style.display='none'; // 키워드 검색결과 display none
-    expandKeyword_keyword.innerHTML=""; // 키워드 검색결과 display none
-    expandRelkeyword_table_pc.innerHTML=""; // pc 테이블 초기화
+    expandKeyword_keyword.style.display='none'; // 키워드 검색결과 display none
+    expandKeyword_content.innerHTML=""; // 키워드 검색결과 display none
+    
     expand_csv_btn.innerHTML=""; // csv button 초기화
     
-
     /* 버튼 클릭 후 모든 HTML 기능 비활성화 */
     body_content.style.pointerEvents="none";
     body_content.style.opacity="85%";
@@ -117,9 +117,8 @@ expand_btn_keywords_pc.addEventListener('click', (e)=>{
         clearInterval(id);
         spinner.style.display='none';
         spinner_info.style.display='none';
-
-        expandRelkeyword_table_pc.style.display='block';
         expand_keywords_pc.style.display='block';
+
         expandKeyword_content.style.display='block';
 
         /* fetch 완료 후 HTML 기능 재활성화 */
@@ -135,30 +134,17 @@ expand_btn_keywords_pc.addEventListener('click', (e)=>{
         expand_csv_btn.innerHTML+=`
             <a href="expand-export-csv/${keyword}"><i class="fas fa-file-csv h5 text-dark"></i></a>
         `;
-        expandRelkeyword_table_pc.innerHTML+=`
-    
-        <tr>
-            <th style="font-size:70%; width:5%; vertical-align:middle;">#</th>
-            <th style="font-size:70%; width:50%; vertical-align:middle;">키워드</th>
-            <th style="font-size:70%; width:15%;">PC 검색량<br>(월)</th>
-            <th style="font-size:70%; width:15%;">Mobie 검색량<br>(월)</th>
-            <th style="font-size:70%; width:15%;">블로그 발행량<br>(전체))</th>
-            <th style="font-size:70%; width:20%; vertical-align:middle;">등급</th>
-        </tr>
-    
-        `;
+
         for(var i=0; i<result.length; i++){
             expandRelkeyword_table_pc.innerHTML+= `
-
-                <tr>
-                    <th style="width:5%;" scope="row">${i+1}</th>
-                    <td style="width:50%;"><a href="/search-l2/${result[i].keyword}"><strong>${result[i].keyword}</strong></a></td>
-                    <td style="width:15%;"><strong>${result[i].monthlyPcQcCnt.toLocaleString('en-US')}</strong></td>
-                    <td style="width:15%;"><strong>${result[i].monthlyMobileQcCnt.toLocaleString('en-US')}</strong></td>
-                    <td style="width:15%;"><strong>${result[i].pubAmount.toLocaleString('en-US')}</strong></td>
-                    <td style="width:20%;" class="text-danger"><strong>${result[i].keywordRating}</strong></td>
-                </tr>
-
+            <tr>
+                <th scope="row">${i+1}</th>
+                <td><a href="/search-l2/${result[i].keyword}"><strong>${result[i].keyword}</strong></a></td>
+                <td><strong>${result[i].monthlyPcQcCnt.toLocaleString('en-US')}</strong></td>
+                <td><strong>${result[i].monthlyMobileQcCnt.toLocaleString('en-US')}</strong></td>
+                <td><strong>${result[i].pubAmount.toLocaleString('en-US')}</strong></td>
+                <td class="text-danger"><strong>${result[i].keywordRating}</strong></td>
+            </tr>
         `;
         }
     })
@@ -166,18 +152,18 @@ expand_btn_keywords_pc.addEventListener('click', (e)=>{
 
 expand_btn_keywords_mobile.addEventListener('click', (e)=>{
     e.preventDefault();
-    
+    expandRelkeyword_table_mobile.innerHTML="";
+
     const keyword=expand_search_keyword_mobile.value;
     expand_search_keyword_mobile.value=null;
     
     spinner.style.display='block';
     spinner_info.style.display='block';
-    expandRelkeyword_table_mobile.style.display='none';
     expand_keywords_mobile.style.display='none';
 
-    expandKeyword_content.style.display='none';
-    expandKeyword_keyword.innerHTML=""; // 키워드 검색결과 display none
-    expandRelkeyword_table_mobile.innerHTML="";
+    expandKeyword_keyword.style.display='none';
+    expandKeyword_content.innerHTML=""; // 키워드 검색결과 display none
+    
     expand_csv_btn.innerHTML="";
     
     /* 버튼 클릭 후 모든 HTML 기능 비활성화 */
@@ -217,9 +203,9 @@ expand_btn_keywords_mobile.addEventListener('click', (e)=>{
         clearInterval(id);
         spinner.style.display='none';
         spinner_info.style.display='none';
-        expandRelkeyword_table_mobile.style.display='block';
         expand_keywords_mobile.style.display='block';
-        expandKeyword_content.style.display='block';
+
+        expandKeyword_content.style.display='block';        
 
         /* fetch 완료 후 HTML 기능 재활성화 */
         body_content.style.pointerEvents="auto";
@@ -233,16 +219,6 @@ expand_btn_keywords_mobile.addEventListener('click', (e)=>{
         `;
         expand_csv_btn.innerHTML+=`
             <a href="expand-export-csv/${keyword}"><i class="fas fa-file-csv h5 text-dark"></i></a>
-        `;
-
-        expandRelkeyword_table_mobile.innerHTML+=`
-        <tr>
-            <th style="font-size:70%; width:3%; vertical-align:middle;">#</th>
-            <th style="font-size:70%; width:45%; vertical-align:middle;">KEY</th>
-            <th style="font-size:70%; width:8%;">검색<br>(월)</th>
-            <th style="font-size:70%; width:8%;">발행<br>(전체)</th>
-            <th style="font-size:70%; width:8%;">등급</th>
-        </tr>
         `;
 
         for(var i=0; i<result.length; i++){

@@ -720,7 +720,7 @@ def expandKeyword_js(request):
             keyword=json.loads(request.body).get('keyword')
             print(keyword, 'JavaScript fetched !')
             keyword_list=expandKeywordScraper(keyword)
-            print("=== Scrpaer Complete! ===")
+            print("=== Scraper Complete! ===")
             end1 = time.time()
             time_elapsed1=timedelta(seconds=end1-start)
             print(time_elapsed1)
@@ -739,7 +739,7 @@ def expandKeyword_js(request):
 
             # else:
             analyize_start=time.time()
-            for data in keyword_list[:60]:
+            for data in keyword_list[:100]:
                 result_dict={}
                 searchAmountList=naverAdsAPI(data)
                 monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
@@ -781,8 +781,6 @@ def expandKeyword_js(request):
             print(" 총 소요시간 : ", time_elapsed)
             print("====================== ")
 
-            
-
             return JsonResponse(result_list_filtered, safe=False)
         except:
             print(traceback.format_exc())
@@ -791,7 +789,30 @@ def expandKeyword_js(request):
 def expandKeywordScraper(keyword):
     """
     # 목적 : 블로그 URL 수집 & 태그 수집
-    # 참고 : selenium module 사용
+    # 참고 : BeautifulSoup 사용
+    # 설명 : m.blog.naver.com 에서 상위 20개 블로그 긁어옴
+    """
+    
+    keyword=urllib.parse.quote(keyword)
+    tags=[]
+    urls=[]
+
+    url=f'https://m.blog.naver.com/SectionPostSearch.naver?orderType=sim&searchValue={keyword}'
+    html=requests.get(url)
+    soup=bs(html.text, 'html.parser')
+    urls=soup.findAll(class_='postlist__LXY3R')
+    for url in urls:
+        try:
+            html=requests.get(url.a.attrs['href'])
+            soup=bs(html.text, 'html.parser')
+            # title=soup.find(class_='se-module se-module-text se-title-text').get_text()
+            tags+=soup.find(class_='post_tag').findAll(class_='ell')
+            
+        except:
+            pass
+    tags=[e.get_text().replace('#','') for e in tags]
+
+    return list(dict.fromkeys(tags))
     """
     try:
         options = webdriver.ChromeOptions()
@@ -801,12 +822,8 @@ def expandKeywordScraper(keyword):
         driver = webdriver.Chrome('/usr/bin/chromedriver', chrome_options=options) # 크롬 웹 드라이버
     except:
         pass
-    
-    keyword=urllib.parse.quote(keyword)
-    tags=[]
-    urls=[]
 
-    # 블로그 섹션 첫 페이지 수집 
+    블로그 섹션 첫 페이지 수집 
     try:
         url=f'https://section.blog.naver.com/Search/Post.naver?pageNo=1&rangeType=ALL&orderBy=sim&keyword={keyword}'
         driver.get(url)
@@ -820,18 +837,12 @@ def expandKeywordScraper(keyword):
     except:
         print(traceback.format_exc())
 
-    # 블로그 노출 리스트 (블로그 섹션 3페이지까지 수집)  
-    # 작업시간 너무 오래걸림 / 1페이지만 수집함(RAM 1GB 서버 환경에서 어쩔 수 없다)
+    작업시간 너무 오래걸림 / 1페이지만 수집함(RAM 1GB 서버 환경에서 어쩔 수 없다)
+    결국 selenium 포기함
 
-    # try:
-    #     url=f'https://section.blog.naver.com/Search/Post.naver?pageNo={2}&rangeType=ALL&orderBy=sim&keyword={keyword}'
-    #     driver.get(url)
-    #     sel = Selector(text = driver.page_source)
-    #     urls+=sel.xpath('//*[@class="desc"]/a[1]/@href').extract()
-    # except:
-    #     print(traceback.format_exc())
 
-    # # 블로그 글 별로 태그 수집로직
+
+    # 블로그 글 별로 태그 수집로직
     for url in urls:
         time.sleep(0.5)
         try: 
@@ -845,6 +856,7 @@ def expandKeywordScraper(keyword):
             print(traceback.format_exc())
     driver.quit()
     return list(set(tags))
+    """
 
 @csrf_exempt
 @staff_member_required
@@ -860,79 +872,125 @@ def blogAnaylize(request):
 def blogAnaylize_js(request):
     """
     # 기능 : 블로그 분석 javascript fetch function
-    # 참고 : selenium module 사용
+    # 참고 : BeautifulSoup 사용
+    # 설명 : m.blog.naver.com 에서 상위 20개 블로그 긁어옴
     """
     if request.method=="POST":
-        try:
-            print("postAnalize Javascript fetched !")
-            keyword=json.loads(request.body).get('keyword')
-            options = webdriver.ChromeOptions()
-            options.add_argument('headless')
-            options.add_argument('window-size=1920x1080')
-            options.add_argument("disable-gpu")
-            driver = webdriver.Chrome('/usr/bin/chromedriver', chrome_options=options) # 크롬 웹 드라이버
-        except:
-            pass
-        
-        kw_quote=parse.quote(keyword)
+        start=time.time()
         result_list=[]
-        urls=[]
 
-        # 블로그 섹션 첫 페이지 수집
-        try:
-            url=f'https://section.blog.naver.com/Search/Post.naver?pageNo=1&rangeType=ALL&orderBy=sim&keyword={kw_quote}'
-            driver.get(url)
-            sel = Selector(text = driver.page_source)
-
-            # 블로그 링크수집하기
-            urls+=sel.xpath('//*[@class="desc"]/a[1]/@href').extract()
-            
-        except:
-            print(traceback.format_exc())  
-
-        # 블로그 글 분석 로직(글갯수, 이미지/동영상 갯수, 키워드 반복 횟수)
+        print("postAnalize Javascript fetched !")
+        keyword=json.loads(request.body).get('keyword')
+        kw=parse.quote(keyword)
+        url=f'https://m.blog.naver.com/SectionPostSearch.naver?orderType=sim&searchValue={kw}'
+        html=requests.get(url)
+        soup=bs(html.text, 'html.parser')
+        urls=soup.findAll(class_='postlist__LXY3R')
+        end1=time.time()
+        elapsed1=timedelta(seconds=end1-start)
+        print("=== URL 수집 소요시간 : ", elapsed1, " ===")
         for url in urls:
-            time.sleep(1)
-            try: 
-                result_dict={}
-                driver.get(url)
-                driver.switch_to.frame('mainFrame')
-                sel=Selector(text=driver.page_source)
-                
-                # text
-                text = sel.xpath('//*[@class="se-main-container"]//text()').extract()
-                text=list(dict.fromkeys(text))
-                text_str=' '.join(text)
-
-                # image
-                image=sel.xpath('//*[contains(@class,"se-module se-module-image")]').extract()
-
-                # vedio
-                vedio=sel.xpath('//*[contains(@class, "se-component se-video se-l-default")]').extract()
-
-                # 키워드 반복
+            try:
+                # Text Length
+                text_str=[]
+                html=requests.get(url.a.attrs['href'])
+                soup=bs(html.text, 'html.parser')
+                text_str+=soup.findAll(class_='se-text-paragraph')
+                text_str=[e.find('span').get_text().replace('\u200b','').replace('\n\n\n\n','') for e in text_str]
+                text_str=list(dict.fromkeys(text_str))
+                text_str=' '.join(text_str)
+                # Keyword 반복
                 str_count=text_str.count(keyword)+text_str.count(keyword.replace(' ',''))
-                print('keyword : ', keyword, keyword.replace(' ',''))
-                print('keyword 반복 : ', text_str.count(keyword), text_str.count(keyword.replace(' ','')))
-                # print("================================================")
-                # print("1. text 갯수 : ",len(text_str))
-                # print("2. image 갯수 : ", len(image))
-                # print("3. vedio 갯수 : ", len(vedio))
-                # print('4. 키워드 반복횟수 : ',str_count)
-                # print("================================================")
+                # Image Counting
+                img_count=soup.findAll(class_='se-module se-module-image')
+                # Vedio Counting
+                vedio_count=soup.findAll(class_='se-component se-video se-l-default')
+
                 result_dict={
                         'textLen':len(text_str), 
-                        'imageCount':len(image),
-                        'vedioCount':len(vedio),
+                        'imageCount':len(img_count),
+                        'vedioCount':len(vedio_count),
                         'keywordCount':str_count,
                     }
                 result_list.append(result_dict)
-                
             except:
                 print(traceback.format_exc())
-                return JsonResponse(list('failed'), safe=False)
-        driver.quit()
+                pass
+        end2=time.time()
+        elapsed2=timedelta(seconds=end2-start)
+        print("=== 블로그 분석 완료 : ", elapsed2, " ===")
         return JsonResponse(result_list, safe=False)
+        """
+        # try:
+        #     print("postAnalize Javascript fetched !")
+        #     keyword=json.loads(request.body).get('keyword')
+        #     options = webdriver.ChromeOptions()
+        #     options.add_argument('headless')
+        #     options.add_argument('window-size=1920x1080')
+        #     options.add_argument("disable-gpu")
+        #     driver = webdriver.Chrome('/usr/bin/chromedriver', chrome_options=options) # 크롬 웹 드라이버
+        # except:
+        #     pass
+        
+        # kw_quote=parse.quote(keyword)
+        # result_list=[]
+        # urls=[]
+
+        # # 블로그 섹션 첫 페이지 수집
+        # try:
+        #     url=f'https://section.blog.naver.com/Search/Post.naver?pageNo=1&rangeType=ALL&orderBy=sim&keyword={kw_quote}'
+        #     driver.get(url)
+        #     sel = Selector(text = driver.page_source)
+
+        #     # 블로그 링크수집하기
+        #     urls+=sel.xpath('//*[@class="desc"]/a[1]/@href').extract()
+            
+        # except:
+        #     print(traceback.format_exc())  
+
+        # # 블로그 글 분석 로직(글갯수, 이미지/동영상 갯수, 키워드 반복 횟수)
+        # for url in urls:
+        #     time.sleep(1)
+        #     try: 
+        #         result_dict={}
+        #         driver.get(url)
+        #         driver.switch_to.frame('mainFrame')
+        #         sel=Selector(text=driver.page_source)
+                
+        #         # text
+        #         text = sel.xpath('//*[@class="se-main-container"]//text()').extract()
+        #         text=list(dict.fromkeys(text))
+        #         text_str=' '.join(text)
+
+        #         # image
+        #         image=sel.xpath('//*[contains(@class,"se-module se-module-image")]').extract()
+
+        #         # vedio
+        #         vedio=sel.xpath('//*[contains(@class, "se-component se-video se-l-default")]').extract()
+
+        #         # 키워드 반복
+        #         str_count=text_str.count(keyword)+text_str.count(keyword.replace(' ',''))
+        #         print('keyword : ', keyword, keyword.replace(' ',''))
+        #         print('keyword 반복 : ', text_str.count(keyword), text_str.count(keyword.replace(' ','')))
+        #         # print("================================================")
+        #         # print("1. text 갯수 : ",len(text_str))
+        #         # print("2. image 갯수 : ", len(image))
+        #         # print("3. vedio 갯수 : ", len(vedio))
+        #         # print('4. 키워드 반복횟수 : ',str_count)
+        #         # print("================================================")
+        #         result_dict={
+        #                 'textLen':len(text_str), 
+        #                 'imageCount':len(image),
+        #                 'vedioCount':len(vedio),
+        #                 'keywordCount':str_count,
+        #             }
+        #         result_list.append(result_dict)
+                
+        #     except:
+        #         print(traceback.format_exc())
+        #         return JsonResponse(list('failed'), safe=False)
+        # driver.quit()
+        """
 
 def keywordHistory(request):
     """
