@@ -24,6 +24,25 @@ const keyword_rating_mobile=document.getElementById("keyword_rating_mobile");
 const relkeyword_table=document.getElementById("relkeyword_table");
 const relkeyword_table_main=document.getElementById("relkeyword_table_main");
 
+const body_content=document.getElementById("body_content");
+const shareBtn=document.getElementById("shareBtn");
+const shareInfo=document.getElementById("shareInfo");
+
+const exitBtn=document.getElementById("exitBtn");
+
+shareBtn.addEventListener('click', ()=>{
+    // body_content.style.pointerEvents="none";
+    // HTMLBodyElement.style.backgroundColor='black';
+    // body_content.style.opacity="50%";
+
+    // shareInfo.style.display='block';
+    
+})
+
+exitBtn.addEventListener('click', ()=>{
+    shareInfo.style.display='none';
+})
+
 function getHistoryCount(){
     const hisotryCounter=document.getElementById("hisotryCounter");
     hisotryCounter.innerHTML="";

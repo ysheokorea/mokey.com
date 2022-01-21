@@ -66,11 +66,28 @@
                 <h3><strong id="relKeyword"></strong></h3>
                 <h3><strong id="">검색어를 입력해주세요</strong></h3>
                 {% else %}
-                <div style="font-size:20px;"><strong id="relKeyword">{{keyword}}</strong> 검색결과</div>
+                <div style="font-size:20px;"><strong id="relKeyword">{{keyword}}</strong> 검색결과 <span id="shareBtn"><i class="fas fa-share-alt-square h3"></i></span></div>
+                <style>
+                    #shareBtn{
+                        position : relative;
+                        right:-200px;
+                        top:1px;
+                        display:none;
+                    }
+                    #shareBtn:hover{
+                        cursor:pointer;
+                        transform:scale(1.2);
+                    }
+                </style>
                 {% endif %}
             </div>
         </div>
-        <div class="row border p-1 d-flex flex-row justify-content-around" id="search_result_dashboard">
+        <div class="bg-success" id="shareInfo" style="width:300px; height:100px; display:none; position:absolute; z-index:200;">
+            <span class="text-right" id="exitBtn"><i class="fas fa-times text-right"></i></span>
+            <p>https://www.mokey.net/search-l2/{{keyword}}</p>
+            <p>링크를 복사해주세요</p>
+        </div>
+        <div class="row border p-1 d-flex flex-column justify-content-around" id="search_result_dashboard">
             <p style="text-align:start;">키워드 등급</p>
             <!-- desktop -->
             <div class="col-8 col-sm-12 text-center w-100" width="100%;" id="keyword_amount_desktop">
