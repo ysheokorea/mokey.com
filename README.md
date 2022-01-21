@@ -81,4 +81,15 @@
    - [Closed]Naver API Client Key / Application 정리(mokey.net)
    - [Closed]Naver API 앱 검수 요청
    - [Closed]키워드 추천 관리자 모드 화면 추가
-   - [Open] search-l2/history javascript fetch 안되는 문제
+   - [Closed] search-l2/history javascript fetch 안되는 문제
+
+
+2022.01.21
+   - [Closed]블로그 확장기능 BeautifulSoup 적용
+   - [Closed]회원가입 E-mail 인증기능 / 메일 전송
+   - [Closed]인기뉴스 랭킹 charField->integerField 변경
+   - [Closed]블로그 확장 Table 규격 맞추기
+   - [Closed]블로그 확장 키워드 검색 최대 100개 증가
+   - [Open]회원가입 E-mail Template 작성
+   - [Open]구글 서치콘솔 하부 URL 색인 등록
+   - [Open]CRONTAB DB 삭제 로직 구현   
