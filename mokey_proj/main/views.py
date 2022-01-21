@@ -823,13 +823,13 @@ def expandKeywordScraper(keyword):
     # 블로그 노출 리스트 (블로그 섹션 3페이지까지 수집)  
     # 작업시간 너무 오래걸림 / 1페이지만 수집함(RAM 1GB 서버 환경에서 어쩔 수 없다)
 
-    try:
-        url=f'https://section.blog.naver.com/Search/Post.naver?pageNo={2}&rangeType=ALL&orderBy=sim&keyword={keyword}'
-        driver.get(url)
-        sel = Selector(text = driver.page_source)
-        urls+=sel.xpath('//*[@class="desc"]/a[1]/@href').extract()
-    except:
-        print(traceback.format_exc())
+    # try:
+    #     url=f'https://section.blog.naver.com/Search/Post.naver?pageNo={2}&rangeType=ALL&orderBy=sim&keyword={keyword}'
+    #     driver.get(url)
+    #     sel = Selector(text = driver.page_source)
+    #     urls+=sel.xpath('//*[@class="desc"]/a[1]/@href').extract()
+    # except:
+    #     print(traceback.format_exc())
 
     # # 블로그 글 별로 태그 수집로직
     for url in urls:
