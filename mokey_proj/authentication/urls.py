@@ -7,7 +7,7 @@ app_name='authentication'
 urlpatterns = [
     path('login/', views.user_login, name='user_login'),
     path('register/', views.user_register, name='user_register'),
-    path('email_verification/', views.email_verification, name='email_verification'),
+    path('activate/<uidb64>/<token>', views.Activate_VerficationEmail, name="Activate_VerficationEmail"),
     # path('naver_register/', csrf_exempt(views.naver_user_register), name='naver_user_register'),
     path('logout/', views.user_logout, name='user_logout'), 
 

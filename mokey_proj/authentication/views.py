@@ -15,11 +15,16 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.urls import reverse
-from django.core.mail import EmailMessage, message
+from django.core.mail import EmailMessage, message, EmailMultiAlternatives
 
 from django.views.decorators.csrf import csrf_exempt
 
 import threading
+
+from .utils import account_activation_token
+
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 # Create your views here.
 
@@ -41,6 +46,7 @@ def user_login(request):
     return render(request, 'authentication/login.html')
 
 def user_register(request):
+    from email.mime.text import MIMEText
     """
     # 목적 : 회원가입 기능
     """
@@ -53,12 +59,37 @@ def user_register(request):
     
         if not User.objects.filter(username=email).exists():
             try:
-                user=User.objects.create_user(username=email, first_name=username)
+                user=User.objects.create_user(username=email, email=email, first_name=username)
                 user.set_password(password)
+                user.is_active = False      
                 user.save()
-                messages.success(request, username+' 님 회원가입을 축하드립니다')
+
+
+                uidb64=urlsafe_base64_encode(force_bytes(user.pk))
+                domain=get_current_site(request).domain
+                link = reverse('authentication:Activate_VerficationEmail', kwargs={
+                    'uidb64' : uidb64, 'token' : account_activation_token.make_token(user)})
+                activate_url = 'http://'+domain+link
+
+                
+                context={
+                    'username':user.first_name,
+                    'activate_url':activate_url,
+                }
+                
+                email_subject = '[Mokey] 계정 인증을 완료해주세요'
+
+                html_message=render_to_string('authentication/mail_template.html', context)
+
+                emailMessage=EmailMultiAlternatives(email_subject)
+                emailMessage.attach_alternative(html_message, "text/html")
+                emailMessage.to=[email]
+                EmailThread(emailMessage).start()
+
+                messages.success(request, username+' 님 회원가입을 축하합니다\n' + '메일인증으로 회원가입을 완료해주세요')
                 return redirect('authentication:user_login')
             except:
+                print(traceback.format_exc())
                 messages.warning(request, '계정정보를 다시 확인해주세요')
                 return redirect('authentication:user_register')
         else:
@@ -68,22 +99,32 @@ def user_register(request):
     context={'form':form}
     return render(request, 'authentication/register.html', context)
 
+def Activate_VerficationEmail(request,uidb64, token):
+     
+     if request.method=="GET":
+        try:
+            id = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=id)
+
+            if not account_activation_token.check_token(user, token):
+                return redirect('authentication:user_login' + '?message=' + 'User Already Activated')
+            if user.is_active:
+                return redirect('authentication:user_login')
+
+            user.is_active = True
+            user.save()
+            messages.success(request, '계정인증이 완료되었습니다.')
+            return redirect('authentication:user_login')
+        except Exception as ex:
+            print(traceback.format_exc())
+            pass
+
+
 @csrf_exempt
 def email_verification(request):
     if request.method=="POST":
-        from uuid import uuid4
-        email=json.loads(request.body).get('email')
-        token=uuid4()
-        email_subject='[Mokey] 회원가입 인증메일'
-        email_body =             '안녕하세요\n\n'+             '아래 토큰을 복사 후 인증을 완료해주세요\n' +             str(token)
-        email = EmailMessage(
-            # Email Subject
-            email_subject,
-            email_body,
-            'noreply@semycolon.com',
-            [email]
-        )
-        EmailThread(email).start()
+
+
 
         return JsonResponse('success', safe=False)
 

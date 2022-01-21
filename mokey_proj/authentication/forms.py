@@ -26,6 +26,7 @@ class CreateUserForm(UserCreationForm):
             }),
             'email':forms.EmailInput(attrs={
                 'name':"email",
+                'id':"emailAddress",
                 'placeholder':"이메일",
                 'class':"form-control",
             }),

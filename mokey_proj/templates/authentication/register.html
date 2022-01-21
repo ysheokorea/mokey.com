@@ -45,41 +45,7 @@
 									<span class="input-group-text bg-dark"><i class="fas fa-envelope-square"></i></span>
 								</div>
 								{{form.email}}
-								<button class="btn btn-dark" onclick="emailVerification();">인증</button>
 							</div>
-							<div class="input-group mb-2">
-								<input class="form-control" id="emailVerificationInput" type="text" title="인증코드를 입력하세요" placeholder="인증코드를 입력하세요" width="50%;">
-								<button class="btn btn-dark" id="emailVerificationBtn">완료</button>
-								<span class="text-danger text-center mt-1 ml-5" id="emailVerificationInfo"><strong><i class="far fa-check-circle mr-1"></i>인증에 실패하였습니다</strong></span>
-							</div>	
-							<script>
-									const emailVerificationInput=document.getElementById("emailVerificationInput");
-									const emailVerificationBtn=document.getElementById("emailVerificationBtn"); 
-									const emailVerificationInfo=document.getElementById("emailVerificationInfo");
-									emailVerificationInput.style.display='none';
-									emailVerificationBtn.style.display='none';
-									emailVerificationInfo.style.display='none'
-
-									emailVerificationBtn.addEventListener('click', ()=>{
-										emailVerificationInput.style.display='none';
-										emailVerificationBtn.style.display='none';
-										emailVerificationInfo.style.display='block'
-									})
-									
-									function emailVerification(){
-										emailVerificationInput.style.display='block';
-										emailVerificationBtn.style.display='block';
-										emailVerificationInfo.style.display='none'
-										fetch('/authentication/email_verification/', {
-											body:JSON.stringify({'email':'ys.heo.korea@gmail.com'}),
-											method:"POST",
-										})
-										.then((res)=>res.json())
-										.then(result=>{
-											console.log(result)
-										})
-									}
-							</script>
 							<div class="input-group mb-2">
 								<div class="input-group-append">
 									<span class="input-group-text bg-dark"><i class="fas fa-key"></i></span>
