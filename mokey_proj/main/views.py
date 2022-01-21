@@ -593,7 +593,7 @@ def live_keyword(request):
         # 목적 : 실시간 검색어 화면 Rendering
     """
     # live_keywords = Livekw.objects.values()
-    live_keywords = Livekw.objects.filter(created_on=today).values()
+    live_keywords = Livekw.objects.filter(created_on=today).order_by('ranking')
     context = {
         'live_keywords':live_keywords,
         'today':today,
@@ -633,7 +633,7 @@ def recommend_admin(request):
         
         context = {
             'recomm_lists':recomm_lists,
-            'recomm_lists_count':str(len(recomm_lists))+ "건조회되었습니다",
+            'recomm_lists_count':str(len(recomm_lists))+ "건 조회되었습니다",
             }
 
         return render(request, 'recommend_admin.html' , context)

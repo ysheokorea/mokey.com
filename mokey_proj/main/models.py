@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Livekw(models.Model):
-    ranking = models.CharField(max_length = 10)
+    ranking = models.IntegerField(null=True, blank=True)
     keyword = models.CharField(max_length = 200)
     amount = models.CharField(max_length = 100)
     keywordNewsTitle=models.CharField(null=True, blank=True, max_length=1000)
