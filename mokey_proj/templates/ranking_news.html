@@ -6,7 +6,9 @@
 
 <div class="d-flex flex-row justify-content-around">
     <div class="ads_panel_side px-5 bg-white text-center" style="width: 30%; height: 700px; margin-top:5%;">
-        <iframe src="https://ads-partners.coupang.com/widgets.html?id=550314&template=carousel&trackingCode=AF2013773&subId=&width=200&height=700" width="200" height="700" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
+        <iframe
+            src="https://ads-partners.coupang.com/widgets.html?id=550314&template=carousel&trackingCode=AF2013773&subId=&width=200&height=700"
+            width="200" height="700" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
     </div>
     <style>
         .ads_panel_side {
@@ -25,22 +27,40 @@
             </ol>
         </nav>
         <div class="ads_panel_main row bg-white text-center" style="height:150px;">
-            <iframe src="https://ads-partners.coupang.com/widgets.html?id=550317&template=carousel&trackingCode=AF2013773&subId=&width=680&height=150" width="680" height="150" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
+            <iframe
+                src="https://ads-partners.coupang.com/widgets.html?id=550317&template=carousel&trackingCode=AF2013773&subId=&width=680&height=150"
+                width="680" height="150" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
         </div>
         <div class="d-flex flex-column border">
             <div class="row">
                 <div class="col">
                     <h5><strong>{{today}}</strong> 많이 본 뉴스</h5>
+                    <div id="tagsResultDiv">
+                        <h3><strong>{{tags_selected}}</strong></h3>
+                        <p>{{tags_selected_count}}</p>
+                        <a class="" href="/search-l2/{{tags_url}}">{{tagsTosearchBtn}}</a>
+                    </div>
+                    
                 </div>
             </div>
             <div class="row d-flex flex-row justify-content-center mb-3">
-                <img src="/static/image/news_wordcloud/output_news_{{today}}.png" id="ranking_new_image" alt=""
-                    height="100%;" style="width:auto;">
+                <!-- <img src="/static/image/news_wordcloud/output_news_{{today}}.png" id="ranking_new_image" alt=""
+                    height="100%;" style="width:auto;"> -->
                 <style>
                     #ranking_new_image:hover {
                         transform: scale(1.05);
                     }
                 </style>
+            </div>
+            <div class="p-1 d-flex flex-row flex-wrap" style="font-size:13px; text-align:start; height:auto;"
+                id="expandKeyword_searchLog">
+                {% for data in news_tags %}
+                <form action="{% url 'ranking_news' %}" method="POST">
+                    {% csrf_token %}
+                    <input class="border rounded-pill m-1 p-2" name="tags_contents" value="{{data.tags_title}}" style="display:none;">
+                    <button class="btn btn-success btn-sm m-1" href="#" type="submit"><strong>{{data.tags_title}}</strong></button>
+                </form>
+                {% endfor %}
             </div>
             <div class="row my-1 px-3">
                 <div class="col">
@@ -52,7 +72,8 @@
                                     <strong>{{ forloop.counter }}</strong></th>
                                     {% else %}
                                     <th class="h4" scope="row" style="color : black;">
-                                        <strong>{{ forloop.counter }}</strong></th>
+                                        <strong>{{ forloop.counter }}</strong>
+                                    </th>
                                     {% endif %}
                                     <td style="text-align:left; vertical-align: middle;"><a href="{{ keyword.link }}"
                                             target="_blank"
@@ -66,14 +87,18 @@
             </div>
         </div>
         <div class="ads_panel_main row bg-white text-center">
-            <iframe src="https://ads-partners.coupang.com/widgets.html?id=550320&template=carousel&trackingCode=AF2013773&subId=&width=680&height=150" width="auto" height="150" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
+            <iframe
+                src="https://ads-partners.coupang.com/widgets.html?id=550320&template=carousel&trackingCode=AF2013773&subId=&width=680&height=150"
+                width="auto" height="150" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
         </div>
         <button onclick="goToTop()" id="topBtn" title="Go to Top">TOP</button>
     </main>
 
 
     <div class="ads_panel_side px-5 bg-white text-center" style="width: 30%; height: 700px; margin-top:5%;">
-        <iframe src="https://ads-partners.coupang.com/widgets.html?id=550318&template=carousel&trackingCode=AF2013773&subId=&width=200&height=700" width="200" height="700" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
+        <iframe
+            src="https://ads-partners.coupang.com/widgets.html?id=550318&template=carousel&trackingCode=AF2013773&subId=&width=200&height=700"
+            width="200" height="700" frameborder="0" scrolling="no" referrerpolicy="unsafe-url"></iframe>
     </div>
 </div>
 {% endblock %}

@@ -37,7 +37,7 @@ import numpy as np
 
 import threading
 
-from .models import Livekw, Mainkw, Rawkw, Newskw, KeywordHistory1, ExpandKeyword
+from .models import Livekw, Mainkw, Rawkw, Newskw, KeywordHistory1, ExpandKeyword, NewsTagsCollector
 
 import traceback
 
@@ -638,16 +638,32 @@ def recommend_admin(request):
 
         return render(request, 'recommend_admin.html' , context)
 
+@csrf_exempt
 def ranking_news(request):
     """
     # 목적 : 추천 뉴스 화면 Rendering
     """
-    news_keywords = Newskw.objects.filter(created_on=today).order_by('?').values()
-    context = {
-        'news_keywords':news_keywords,
-        'today':today,
-    }
-    return render(request, 'ranking_news.html', context)
+    if request.method=="GET":
+        news_tags=NewsTagsCollector.objects.filter(created_on=today).order_by('-tags_count').values()
+        news_keywords = Newskw.objects.filter(created_on=today).order_by('?').values()
+        context = {
+            'news_keywords':news_keywords,
+            'news_tags':news_tags[:20],
+            'today':today,
+        }
+        return render(request, 'ranking_news.html', context)
+    if request.method=="POST":
+        tags_selected=request.POST['tags_contents']
+        news_keywords = Newskw.objects.filter(title__contains=tags_selected, created_on=today).order_by('?').values()
+        context = {
+            'news_keywords':news_keywords,
+            'tags_selected':str(tags_selected)+" 관련뉴스",
+            'tags_selected_count':str(len(news_keywords))+" 건 조회됨",
+            'tagsTosearchBtn':str(tags_selected)+' 키워드 조회',
+            'tags_url':tags_selected,
+            'today':today,
+        }
+        return render(request, 'ranking_news.html',context)
 
 @csrf_exempt
 def search_l(request):
