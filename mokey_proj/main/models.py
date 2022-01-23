@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import JSONField
 
 # Create your models here.
 class Livekw(models.Model):
@@ -70,6 +71,21 @@ class Newskw(models.Model):
         constraints=[
             models.UniqueConstraint(fields=['title','link','created_on'], name='unique newskw')
         ]
+
+class NewsTagsCollector(models.Model):
+    tags_title=models.CharField(max_length=300, null=True, blank=True)
+    tags_count=models.IntegerField(null=True, blank=True)
+    created_on = models.DateField(auto_now_add=True, null=True, blank=True)    
+
+    def __str__(self):
+        return str(self.tags_title)
+
+    class Meta:
+        db_table = 'newstagscollector'
+        constraints=[
+            models.UniqueConstraint(fields=['tags_title','created_on'], name='unique newstagscollector')
+        ]
+    
 
 class KeywordHistory1(models.Model):
     user_id=models.CharField(max_length=1000, null=True, blank=True)
