@@ -1,4 +1,7 @@
 const searchform = document.getElementById("searchform");
+/* Ads Elements */
+const ads_panel_main=document.querySelectorAll(".ads_panel_main")
+const ads_panel_side=document.querySelectorAll(".ads_panel_side");
 
 
 function enterPress(f){

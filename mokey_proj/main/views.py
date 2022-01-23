@@ -593,7 +593,7 @@ def live_keyword(request):
         # 목적 : 실시간 검색어 화면 Rendering
     """
     # live_keywords = Livekw.objects.values()
-    live_keywords = Livekw.objects.filter(created_on=today).order_by('ranking')
+    live_keywords = Livekw.objects.filter(created_on=today).order_by('-amount')
     context = {
         'live_keywords':live_keywords,
         'today':today,

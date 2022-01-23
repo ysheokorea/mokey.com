@@ -4,7 +4,7 @@ from django.db import models
 class Livekw(models.Model):
     ranking = models.IntegerField(null=True, blank=True)
     keyword = models.CharField(max_length = 200)
-    amount = models.CharField(max_length = 100)
+    amount = models.IntegerField(null=True, blank=True)
     keywordNewsTitle=models.CharField(null=True, blank=True, max_length=1000)
     keywordNewsLink=models.CharField(null=True, blank=True, max_length=1000)
     livekwImage = models.ImageField(null=True, blank=True, default='live_keywords.png')
@@ -17,7 +17,7 @@ class Livekw(models.Model):
     class Meta:
         db_table = 'livekw'
         constraints=[
-            models.UniqueConstraint(fields=['ranking','keyword','amount'], name='unique livekw')
+            models.UniqueConstraint(fields=['keyword', 'created_on'], name='unique livekw')
         ]
 
 class Mainkw(models.Model):
@@ -68,7 +68,7 @@ class Newskw(models.Model):
     class Meta:
         db_table = 'newskw'
         constraints=[
-            models.UniqueConstraint(fields=['title','link'], name='unique newskw')
+            models.UniqueConstraint(fields=['title','link','created_on'], name='unique newskw')
         ]
 
 class KeywordHistory1(models.Model):
