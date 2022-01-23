@@ -100,3 +100,7 @@
    - [Closed] 블로그 확장 광고 클릭 가능기능 추가
    - [Closed] Livekw Database => amount Field Alter(Char->Integer)
    - [Closed] Livekw Dtaabase => UniqueConstraint(['ranking', 'keyword', 'amount']->['keyword'])
+
+2022.01.23
+   - [Closed] ranking-news 필터 태그 추가
+
