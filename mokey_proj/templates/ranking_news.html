@@ -58,7 +58,7 @@
                 <form action="{% url 'ranking_news' %}" method="POST">
                     {% csrf_token %}
                     <input class="border rounded-pill m-1 p-2" name="tags_contents" value="{{data.tags_title}}" style="display:none;">
-                    <button class="btn btn-success btn-sm m-1" href="#" type="submit"><strong>{{data.tags_title}}</strong></button>
+                    <button class="btn btn-success btn-sm m-1" href="#" type="submit"><strong>#{{data.tags_title}}</strong></button>
                 </form>
                 {% endfor %}
             </div>

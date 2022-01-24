@@ -104,3 +104,6 @@
 2022.01.23
    - [Closed] ranking-news 필터 태그 추가
 
+2022.01.25
+   - [Closed] AWS server SWAP Memory 추가
+

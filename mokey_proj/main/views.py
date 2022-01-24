@@ -66,7 +66,11 @@ class Signature:
         return base64.b64encode(hash.digest())
 
 def index(request):
-    return render(request, 'main.html')
+    now_time=datetime.now(timezone('Asia/Seoul'))
+    context={
+        'now_time':now_time
+    }
+    return render(request, 'main.html', context)
     
 @csrf_exempt
 def search(request):
