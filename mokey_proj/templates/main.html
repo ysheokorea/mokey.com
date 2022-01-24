@@ -44,8 +44,11 @@
                 })
         }
     </script>
+    {% if request.user.is_staff %}
+    <p>{{now_time}}</p>
+    {% endif %}
 </main>
-<p>{{now_time}}</p>
+
 
 
 
