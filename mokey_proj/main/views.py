@@ -54,7 +54,7 @@ from pytz import timezone
 
 from django.utils import timezone
 
-today=datetime.now(timezone('Asia/Seoul')).strftime('%Y-%m-%d')
+today=timezone.now().strftime('%Y-%m-%d')
 
 # Create your views here.
 
