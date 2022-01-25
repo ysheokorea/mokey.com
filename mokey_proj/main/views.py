@@ -52,6 +52,8 @@ import random
 
 from pytz import timezone
 
+from django.utils import timezone
+
 today=datetime.now(timezone('Asia/Seoul')).strftime('%Y-%m-%d')
 
 # Create your views here.
@@ -66,7 +68,7 @@ class Signature:
         return base64.b64encode(hash.digest())
 
 def index(request):
-    now_time=datetime.now(timezone('Asia/Seoul'))
+    now_time=timezone.now()
     context={
         'now_time':now_time
     }
