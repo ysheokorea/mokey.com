@@ -53,7 +53,7 @@ import random
 from pytz import timezone
 
 today=datetime.now(timezone('Asia/Seoul')).strftime('%Y-%m-%d')
-now_time=datetime.now(timezone('Asia/Seoul'))
+
 # Create your views here.
 
 class Signature:
@@ -66,6 +66,7 @@ class Signature:
         return base64.b64encode(hash.digest())
 
 def index(request):
+    now_time=datetime.now(timezone('Asia/Seoul'))
     context={
         'now_time':now_time
     }
