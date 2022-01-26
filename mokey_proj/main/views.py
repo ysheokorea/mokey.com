@@ -599,6 +599,7 @@ def live_keyword(request):
         # 목적 : 실시간 검색어 화면 Rendering
     """
     # live_keywords = Livekw.objects.values()
+    today=timezone.now()
     live_keywords = Livekw.objects.filter(created_on=today).order_by('-amount')
     context = {
         'live_keywords':live_keywords,
@@ -649,6 +650,7 @@ def ranking_news(request):
     """
     # 목적 : 추천 뉴스 화면 Rendering
     """
+    # today=timezone.now().strftime('%Y-%m-%d')
     if request.method=="GET":
         news_tags=NewsTagsCollector.objects.filter(created_on=today).order_by('-tags_count').values()
         news_keywords = Newskw.objects.filter(created_on=today).order_by('?').values()
