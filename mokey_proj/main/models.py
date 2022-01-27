@@ -31,6 +31,7 @@ class Mainkw(models.Model):
     pubAmountTotalCafe = models.IntegerField(null=True, blank=True)
     kwQuality=models.CharField(max_length=100)
     created_on = models.DateField(auto_now_add=True)   
+    updated_on = models.DateField(auto_now_add=True)   
     category=models.CharField(max_length=100, null=True)   
 
     def __str__(self):

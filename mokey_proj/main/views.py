@@ -166,7 +166,8 @@ def search(request):
                         searchPC=monthlyPcQcCnt,                            
                         searchMOBILE=monthlyMobileQcCnt,                            
                         kwQuality=keywordRating,                
-                        created_on=today,               
+                        created_on=today,          
+                        updated_on=today,     
                         pubAmountTotalBlog=blog_total_count,                
                         pubAmountTotalKin=knin_total_count,                         
                         )
@@ -179,6 +180,7 @@ def search(request):
                             pubAmountTotalBlog=blog_total_count,
                             pubAmountTotalKin=knin_total_count,
                             kwQuality=keywordRating,
+                            updated_on=today,
                             )
                     print("level 5 -- keyword Exists || Updated")         
             else:
@@ -598,8 +600,6 @@ def live_keyword(request):
     """
         # 목적 : 실시간 검색어 화면 Rendering
     """
-    # live_keywords = Livekw.objects.values()
-    today=timezone.now()
     live_keywords = Livekw.objects.filter(created_on=today).order_by('-amount')
     context = {
         'live_keywords':live_keywords,
@@ -650,7 +650,6 @@ def ranking_news(request):
     """
     # 목적 : 추천 뉴스 화면 Rendering
     """
-    # today=timezone.now().strftime('%Y-%m-%d')
     if request.method=="GET":
         news_tags=NewsTagsCollector.objects.filter(created_on=today).order_by('-tags_count').values()
         news_keywords = Newskw.objects.filter(created_on=today).order_by('?').values()
@@ -784,15 +783,26 @@ def expandKeyword_js(request):
                     'keywordRating':keywordRating,
                 }
                 try:
-                    if 'A' in keywordRating:
-                        Mainkw.objects.create(
-                            keyword=data,                                    
-                            searchPC=monthlyPcQcCnt,                            
-                            searchMOBILE=monthlyMobileQcCnt,                            
-                            kwQuality=keywordRating,                
-                            created_on=today,               
-                            pubAmountTotalBlog=pubAmount,                
-                            )
+                    if 'A' in keywordRating or 'B' in keywordRating or 'C' in keywordRating :
+                        try:
+                            Mainkw.objects.create(
+                                keyword=data,                                    
+                                searchPC=monthlyPcQcCnt,                            
+                                searchMOBILE=monthlyMobileQcCnt,                            
+                                kwQuality=keywordRating,                
+                                created_on=today,       
+                                updated_on=today,        
+                                pubAmountTotalBlog=pubAmount,                
+                                )
+                        except:
+                            # 키워드가 이미 존재한다면 DB UPDATE 진행
+                            Mainkw.objects.filter(keyword=keyword).update(
+                                    searchPC=monthlyPcQcCnt,
+                                    searchMOBILE=monthlyMobileQcCnt,                       
+                                    pubAmountTotalBlog=pubAmount,
+                                    kwQuality=keywordRating,
+                                    updated_on=today,
+                                    )
                 except:
                     pass
                 try:
