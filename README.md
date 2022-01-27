@@ -112,4 +112,9 @@
    - [Closed] 사이트등록{daum, naver, Google Sitemap.xml, Bing GSC 연동, ZUM 등록}
    - [Closed] sitemap.xml 추가
    - [Closed] robots.txt 추가
+   - [Open] search_l 대량키워드 조회기능[여러개 키워드 한번에 입력
+   - [Open] DB 삭제 CRONTAB 설계
+   - [Open] openGraph 생성
+   - [Open] admin 화면 Hidden
+   - [Open] 블로그 확장 기능에서 태그 출력기능 추가
 
