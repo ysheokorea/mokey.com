@@ -1,0 +1,10 @@
+User-agent: Yeti
+Allow:/
+
+User-agent: Googlebot
+Allow:/
+
+User-agent: *
+Disallow: /
+
+Sitemap: http://www.mokey.net/sitemap.xml
