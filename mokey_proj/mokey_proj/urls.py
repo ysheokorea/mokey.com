@@ -31,6 +31,6 @@ urlpatterns = [
     path('', include('main.urls')),
     path('authentication/', include('authentication.urls')),
     #sitemap
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap')
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
