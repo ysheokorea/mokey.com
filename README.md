@@ -107,3 +107,9 @@
 2022.01.25
    - [Closed] AWS server SWAP Memory 추가
 
+2022.01.27
+   - [Open] Google Adsense 신청
+   - [Closed] 사이트등록{daum, naver, Google Sitemap.xml, Bing GSC 연동, ZUM 등록}
+   - [Closed] sitemap.xml 추가
+   - [Closed] robots.txt 추가
+
