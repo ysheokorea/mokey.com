@@ -2,6 +2,9 @@ from django.urls import path
 from . import views
 from django.views.decorators.csrf import csrf_exempt
 
+from .sitemaps 
+import * from django.contrib.sitemaps.views import sitemap
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('search', views.search, name='search'),

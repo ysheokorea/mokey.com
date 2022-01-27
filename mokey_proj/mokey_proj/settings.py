@@ -41,7 +41,12 @@ INSTALLED_APPS = [
     'main',
     'django.contrib.humanize',
     'authentication',
+
+    'django.contrib.sites', # sitemap
+    'django.contrib.sitemaps' # sitemap
 ]
+
+SITE_ID=1 #sitemap
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
