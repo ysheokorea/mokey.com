@@ -8,9 +8,9 @@ class StaticViewSitemap(Sitemap):
     def items(self): 
         return [
             'index',
-            'live_keyword',
-            'ranking_news',
-            'introductionPage',
+            # 'live_keyword',
+            # 'ranking_news',
+            # 'introductionPage',
         ] 
         
     def location(self, item): 
