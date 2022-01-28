@@ -772,6 +772,7 @@ def expandKeyword_js(request):
             for data in keyword_list[:100]:
                 result_dict={}
                 searchAmountList=naverAdsAPI(data)
+                print("keyword: ", keyword, "|| searchAmountList : ", searchAmountList)
                 monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
                 monthlyMobileQcCnt=replaceSearchData(searchAmountList[0].get('monthlyMobileQcCnt'))
                 pubAmount=getPubTotalCounter(data)
