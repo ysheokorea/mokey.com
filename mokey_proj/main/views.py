@@ -773,7 +773,7 @@ def expandKeyword_js(request):
                 try:
                     result_dict={}
                     # 동시에 javascript fetch가 들어오면 naverAdsAPI()가 None을 반환함
-                    time.sleep(0.1) # local working
+                    time.sleep(0.3) # local working
                     searchAmountList=naverAdsAPI(data)
                     print("keyword: ", keyword, "|| searchAmountList : ", searchAmountList) # local working
                     monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
