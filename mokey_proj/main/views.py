@@ -759,21 +759,22 @@ def expandKeyword_js(request):
 
 
             keyword_list=expandKeywordScraper(keyword)
-            print("=== Scraper Complete! ===")
+            print("===", keyword, " Scraper Complete! ===")
             end1 = time.time()
             time_elapsed1=timedelta(seconds=end1-start)
             print(time_elapsed1)
-            print("Scrpaered Tags List", keyword_list)
+            print("Scrpaered Tags List", keyword_list) # local working
 
             
 
             # else:
             analyize_start=time.time()
-            for data in keyword_list[:100]:
+            for data in keyword_list[:50]:
                 try:
                     result_dict={}
+                    time.sleep(1) # local working
                     searchAmountList=naverAdsAPI(data)
-                    print("keyword: ", keyword, "|| searchAmountList : ", searchAmountList)
+                    print("keyword: ", keyword, "|| searchAmountList : ", searchAmountList) # local working
                     monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
                     monthlyMobileQcCnt=replaceSearchData(searchAmountList[0].get('monthlyMobileQcCnt'))
                     pubAmount=getPubTotalCounter(data)
