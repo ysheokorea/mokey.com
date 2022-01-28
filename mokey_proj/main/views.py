@@ -763,6 +763,7 @@ def expandKeyword_js(request):
             end1 = time.time()
             time_elapsed1=timedelta(seconds=end1-start)
             print(time_elapsed1)
+            print("Scrpaered Tags List", keyword_list)
 
             
 
