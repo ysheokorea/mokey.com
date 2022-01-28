@@ -770,42 +770,46 @@ def expandKeyword_js(request):
             # else:
             analyize_start=time.time()
             for data in keyword_list[:100]:
-                result_dict={}
-                searchAmountList=naverAdsAPI(data)
-                print("keyword: ", keyword, "|| searchAmountList : ", searchAmountList)
-                monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
-                monthlyMobileQcCnt=replaceSearchData(searchAmountList[0].get('monthlyMobileQcCnt'))
-                pubAmount=getPubTotalCounter(data)
-                keywordRating=ratingKeyword(monthlyPcQcCnt+monthlyMobileQcCnt, pubAmount)
-                result_dict={
-                    'keyword':data,
-                    'monthlyPcQcCnt':monthlyPcQcCnt,
-                    'monthlyMobileQcCnt':monthlyMobileQcCnt,
-                    'pubAmount':pubAmount,
-                    'keywordRating':keywordRating,
-                }
                 try:
-                    if 'A' in keywordRating or 'B' in keywordRating or 'C' in keywordRating :
-                        try:
-                            Mainkw.objects.create(
-                                keyword=data,                                    
-                                searchPC=monthlyPcQcCnt,                            
-                                searchMOBILE=monthlyMobileQcCnt,                            
-                                kwQuality=keywordRating,                
-                                created_on=today,       
-                                updated_on=today,        
-                                pubAmountTotalBlog=pubAmount,                
-                                )
-                        except:
-                            # 키워드가 이미 존재한다면 DB UPDATE 진행
-                            Mainkw.objects.filter(keyword=keyword).update(
-                                    searchPC=monthlyPcQcCnt,
-                                    searchMOBILE=monthlyMobileQcCnt,                       
-                                    pubAmountTotalBlog=pubAmount,
-                                    kwQuality=keywordRating,
-                                    updated_on=today,
-                                    )
+                    result_dict={}
+                    searchAmountList=naverAdsAPI(data)
+                    print("keyword: ", keyword, "|| searchAmountList : ", searchAmountList)
+                    monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
+                    monthlyMobileQcCnt=replaceSearchData(searchAmountList[0].get('monthlyMobileQcCnt'))
+                    pubAmount=getPubTotalCounter(data)
+                    keywordRating=ratingKeyword(monthlyPcQcCnt+monthlyMobileQcCnt, pubAmount)
+                    result_dict={
+                        'keyword':data,
+                        'monthlyPcQcCnt':monthlyPcQcCnt,
+                        'monthlyMobileQcCnt':monthlyMobileQcCnt,
+                        'pubAmount':pubAmount,
+                        'keywordRating':keywordRating,
+                    }
                 except:
+                    print(traceback.format_exc())
+                    pass
+                
+                if 'A' in keywordRating or 'B' in keywordRating or 'C' in keywordRating :
+                    try:
+                        Mainkw.objects.create(
+                            keyword=data,                                    
+                            searchPC=monthlyPcQcCnt,                            
+                            searchMOBILE=monthlyMobileQcCnt,                            
+                            kwQuality=keywordRating,                
+                            created_on=today,       
+                            updated_on=today,        
+                            pubAmountTotalBlog=pubAmount,                
+                            )
+                    except:
+                        # 키워드가 이미 존재한다면 DB UPDATE 진행
+                        Mainkw.objects.filter(keyword=keyword).update(
+                                searchPC=monthlyPcQcCnt,
+                                searchMOBILE=monthlyMobileQcCnt,                       
+                                pubAmountTotalBlog=pubAmount,
+                                kwQuality=keywordRating,
+                                updated_on=today,
+                                )
+                else:
                     pass
                 try:
                     ExpandKeyword.objects.create(main_keyword=keyword, keyword=data, searchPC=monthlyPcQcCnt, searchMOBILE=monthlyMobileQcCnt, pubAmountTotal=pubAmount, kwQuality=keywordRating)
