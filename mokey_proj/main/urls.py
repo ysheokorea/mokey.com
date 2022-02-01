@@ -16,6 +16,7 @@ urlpatterns = [
 
     path('search-l', views.search_l, name="search_l"),
     path('search-l2/<str:kw>', views.search_l2, name="search_l2"),
+    path('search-bulk', views.search_bulk, name="search_bulk"),
     
     path('intro', views.introductionPage, name='introductionPage'),
     

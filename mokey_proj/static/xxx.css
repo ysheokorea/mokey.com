@@ -9,7 +9,7 @@
  */
 
  /* PC 해상도*/
-@media screen and (min-width: 850px) {
+ @media screen and (min-width: 850px) {
   /* main page */
   main{
     width:70%;
@@ -122,6 +122,20 @@
     display:block;
   }
   #expand_keywords_mobile{
+    display:none;
+  }
+
+  /* bulk search keyword */
+  #bulk_search_keyword_pc{
+    display:block;
+  }
+  #bulk_search_keyword_mobile{
+    display:none;
+  }
+  #bulk_btn_keywords_pc{
+    display:block;
+  }
+  #bulk_btn_keywords_mobile{
     display:none;
   }
 
@@ -302,6 +316,20 @@
     display:none;
   }
   #expand_keywords_mobile{
+    display:block;
+  }
+
+  /* bulk search keyword */
+  #bulk_search_keyword_pc{
+    display:none;
+  }
+  #bulk_search_keyword_mobile{
+    display:block;
+  }
+  #bulk_btn_keywords_pc{
+    display:none;
+  }
+  #bulk_btn_keywords_mobile{
     display:block;
   }
 

@@ -1112,4 +1112,85 @@ def expand_export_csv(request, keyword):
     return response
 
 
+@csrf_exempt
+def search_bulk(request):
+    if request.method=="GET":
+        return render(request, "search_bulk.html")
+    
+    if request.method=="POST":
+        try:
+            start = time.time()  
+            result_list=[]
+            
+            keyword_list=json.loads(request.body).get('keyword')           
+            
+            # else:
+            analyize_start=time.time()
+            for data in keyword_list[:50]:
+                result_dict={
+                            'keyword':data,
+                            'monthlyPcQcCnt':0,
+                            'monthlyMobileQcCnt':0,
+                            'pubAmount':0,
+                            'keywordRating':'blank',
+                        }
+                print("length of ",data," is ", len(data))    
+                try:
+                    if len(data) > 0:
+                        result_dict={}
+                        # 동시에 javascript fetch가 들어오면 naverAdsAPI()가 None을 반환함
+                        time.sleep(0.3) # local working
+                        searchAmountList=naverAdsAPI(data)
+                        monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
+                        monthlyMobileQcCnt=replaceSearchData(searchAmountList[0].get('monthlyMobileQcCnt'))
+                        pubAmount=getPubTotalCounter(data)
+                        keywordRating=ratingKeyword(monthlyPcQcCnt+monthlyMobileQcCnt, pubAmount)
+                        result_dict={
+                            'keyword':data,
+                            'monthlyPcQcCnt':monthlyPcQcCnt,
+                            'monthlyMobileQcCnt':monthlyMobileQcCnt,
+                            'pubAmount':pubAmount,
+                            'keywordRating':keywordRating,
+                        }
+                    else:
+                        pass
+                except:
+                    print(traceback.format_exc())
+                    pass
+                
+                if 'A' in keywordRating or 'B' in keywordRating or 'C' in keywordRating :
+                    try:
+                        Mainkw.objects.create(
+                            keyword=data,                                    
+                            searchPC=monthlyPcQcCnt,                            
+                            searchMOBILE=monthlyMobileQcCnt,                            
+                            kwQuality=keywordRating,                
+                            created_on=today,       
+                            updated_on=today,        
+                            pubAmountTotalBlog=pubAmount,                
+                            )
+                    except:
+                        # 키워드가 이미 존재한다면 DB UPDATE 진행
+                        Mainkw.objects.filter(keyword=data).update(
+                                searchPC=monthlyPcQcCnt,
+                                searchMOBILE=monthlyMobileQcCnt,                       
+                                pubAmountTotalBlog=pubAmount,
+                                kwQuality=keywordRating,
+                                updated_on=today,
+                                )
+                else:
+                    pass
+                result_list.append(result_dict)
+            result_list_filtered=sorted(result_list, key=lambda x:x.get('keywordRating'))        
+            analyize_end=timedelta(seconds=time.time()-analyize_start)
+            end = time.time()
+            time_elapsed=timedelta(seconds=end-start)
+            print("======= RESULT ======= ")
+            print(" 키워드 분석시간 : ", analyize_end)
+            print(" 총 소요시간 : ", time_elapsed)
+            print("====================== ")
 
+            return JsonResponse(result_list_filtered, safe=False)
+        except:
+            print(traceback.format_exc())
+            return JsonResponse('Failed', safe=False)
