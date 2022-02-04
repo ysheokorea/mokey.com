@@ -7,7 +7,6 @@
  850초과 : 데스크탑 사이즈
  850이하 : 핸드폰 사이즈
  */
-
  /* PC 해상도*/
  @media screen and (min-width: 850px) {
   /* main page */
@@ -137,6 +136,14 @@
   }
   #bulk_btn_keywords_mobile{
     display:none;
+  }
+
+  /* Ranking News WordCloud */
+  #chartdiv{
+    display:block !important;
+  }
+  #ranking_new_image{
+    display:none !important;
   }
 
 }
@@ -343,6 +350,14 @@
   /* Ads sidebar */
   .ads_panel_side{
     display:none;
+  }
+
+  /* Ranking News WordCloud */
+  #chartdiv{
+    display:none !important;
+  }
+  #ranking_new_image{
+    display:block !important;
   }
 }
 

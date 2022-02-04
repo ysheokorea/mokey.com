@@ -120,3 +120,14 @@
 
 2022.02.01
    - [Closed] 키워드 대량분석 기능 추가
+
+2022.02.03
+   - [Open] 키워드 대량분석 엑셀기능 추가(보류)
+   - [Closed] mainkw 적재로직 변경(검색량>=발행량)
+   - [Closed] 인기검색어 날짜 선택기능 추가(모바일 적용 필요)
+   - [Closed] 키워드 대량분석 textarea 크기 고정
+   - [Closed] 키워드 확장 데이터 대량 사용 경고창
+   - [Closed] 인기뉴스 javascript word clound 기능 붙이기
+
+2022.02.04
+   - [Closed] 인기검색어 날짜변경기능, wordcloud js 기능 완료

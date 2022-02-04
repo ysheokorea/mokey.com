@@ -158,8 +158,8 @@ def search(request):
             #   - 사람들이 검색한 키워드는 먼저 "rawkw DB"에 적재된다.
             #   - 이 후 추가적인 프로그램을 돌려서 블로그 발행량 + 키워드 품질 지수를 추가해서 "mainkw DB"에 적재한다.
             
-                # 새로운 키워드 발견 / 데이터베이스 생성
-            if monthlyPcQcCnt+monthlyMobileQcCnt>100 and monthlyPcQcCnt>30 and monthlyMobileQcCnt>30:
+            # 새로운 키워드 발견 / 데이터베이스 생성
+            if monthlyPcQcCnt+monthlyMobileQcCnt>=blog_total_count:
                 try:
                     Mainkw.objects.create(
                         keyword=keyword,                                    
@@ -596,16 +596,60 @@ def naverSearchAPI_cafe(keyword):
     else:
         print("Error Code:" + rescode)
 
+@csrf_exempt
 def live_keyword(request):
     """
         # 목적 : 실시간 검색어 화면 Rendering
     """
-    live_keywords = Livekw.objects.filter(created_on=today).order_by('-amount')
-    context = {
-        'live_keywords':live_keywords,
-        'today':today,
-    }
-    return render(request, 'live-keywords.html', context)
+    if request.method=="GET":
+        live_keywords = Livekw.objects.filter(created_on=today).order_by('-amount')
+        context = {
+            'live_keywords':live_keywords,
+            'today':today,
+        }
+        return render(request, 'live-keywords.html', context)
+    
+    if request.method=="POST":
+        if json.loads(request.body).get("dateSignal")=='left':
+            dateValue=json.loads(request.body).get("dateValue")
+            dateValue_temp=datetime.strptime(dateValue, '%Y-%m-%d')
+            selectedDateValue=(dateValue_temp-timedelta(days=1)).strftime('%Y-%m-%d')
+            
+            # live_keywords = Livekw.objects.filter(created_on=selectedDateValue).order_by('-amount')
+            livekw_list=[]
+            for data in Livekw.objects.filter(created_on=selectedDateValue).order_by('-amount'):
+                livekw_dict={
+                    'keyword':data.keyword,
+                    'amount':data.amount,
+                    'ranking':data.ranking,
+                    'keywordNewsTitle':data.keywordNewsTitle,
+                    'keywordNewsLink':data.keywordNewsLink,
+                }
+                livekw_list.append(livekw_dict)
+            context = {
+                'live_keywords':livekw_list,
+                'today':selectedDateValue,
+            }
+        else:
+            dateValue=json.loads(request.body).get("dateValue")
+            dateValue_temp=datetime.strptime(dateValue, '%Y-%m-%d')
+            selectedDateValue=(dateValue_temp+timedelta(days=1)).strftime('%Y-%m-%d')
+
+            livekw_list=[]
+            for data in Livekw.objects.filter(created_on=selectedDateValue).order_by('-amount'):
+                livekw_dict={
+                    'keyword':data.keyword,
+                    'amount':data.amount,
+                    'ranking':data.ranking,
+                    'keywordNewsTitle':data.keywordNewsTitle,
+                    'keywordNewsLink':data.keywordNewsLink,
+                }
+                livekw_list.append(livekw_dict)
+            context = {
+                'live_keywords':livekw_list,
+                'today':selectedDateValue,
+            }
+        return JsonResponse(context, safe=False)
 
 @login_required(login_url='authentication:user_login')
 def recommend_keywords(request):
@@ -756,14 +800,12 @@ def expandKeyword_js(request):
                     result_list.append(result_dict)
                 return JsonResponse(result_list, safe=False)
 
-
-
             keyword_list=expandKeywordScraper(keyword)
-            print("===", keyword, " Scraper Complete! ===")
-            end1 = time.time()
-            time_elapsed1=timedelta(seconds=end1-start)
-            print(time_elapsed1)
-            print("Scrpaered Tags List", keyword_list) # local working
+            # print("===", keyword, " Scraper Complete! ===")
+            # end1 = time.time()
+            # time_elapsed1=timedelta(seconds=end1-start)
+            # print(time_elapsed1)
+            # print("Scrpaered Tags List", keyword_list) # local working
 
             
 
@@ -773,7 +815,7 @@ def expandKeyword_js(request):
                 try:
                     result_dict={}
                     # 동시에 javascript fetch가 들어오면 naverAdsAPI()가 None을 반환함
-                    time.sleep(0.3) # local working
+                    time.sleep(0.5) # local working
                     searchAmountList=naverAdsAPI(data)
                     print("keyword: ", keyword, "|| searchAmountList : ", searchAmountList) # local working
                     monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
@@ -791,7 +833,7 @@ def expandKeyword_js(request):
                     print(traceback.format_exc())
                     pass
                 
-                if 'A' in keywordRating or 'B' in keywordRating or 'C' in keywordRating :
+                if monthlyPcQcCnt+monthlyMobileQcCnt>=pubAmount:
                     try:
                         Mainkw.objects.create(
                             keyword=data,                                    
@@ -1139,7 +1181,7 @@ def search_bulk(request):
                     if len(data) > 0:
                         result_dict={}
                         # 동시에 javascript fetch가 들어오면 naverAdsAPI()가 None을 반환함
-                        time.sleep(0.3) # local working
+                        time.sleep(0.5) # local working
                         searchAmountList=naverAdsAPI(data)
                         monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
                         monthlyMobileQcCnt=replaceSearchData(searchAmountList[0].get('monthlyMobileQcCnt'))
@@ -1158,7 +1200,7 @@ def search_bulk(request):
                     print(traceback.format_exc())
                     pass
                 
-                if 'A' in keywordRating or 'B' in keywordRating or 'C' in keywordRating :
+                if monthlyPcQcCnt+monthlyMobileQcCnt>=pubAmount:
                     try:
                         Mainkw.objects.create(
                             keyword=data,                                    

@@ -40,17 +40,67 @@
                         <p>{{tags_selected_count}}</p>
                         <a class="" href="/search-l2/{{tags_url}}">{{tagsTosearchBtn}}</a>
                     </div>
-                    
                 </div>
             </div>
-            <div class="row d-flex flex-row justify-content-center mb-3">
-                <img src="/static/image/news_wordcloud/output_news_{{today}}.png" id="ranking_new_image" alt=""
+            <div class="row mb-3">
+                
+                
+                 
+                <img src="/static/image/news_wordcloud/output_news_2022-01-22.png" id="ranking_new_image" alt=""
                     height="100%;" style="width:auto;">
+                
                 <style>
                     #ranking_new_image:hover {
-                        transform: scale(1.05);
+                        transform: scale(1.02);
                     }
                 </style>
+                
+                <!-- Resources -->
+                <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+                <script src="https://cdn.amcharts.com/lib/5/wc.js"></script>
+                <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+                <!-- Styles -->
+                <style>
+                    #chartdiv {
+                    width: 90%;
+                    height: 400px;
+                    }
+                </style>
+                <!-- Chart code -->
+                <script>
+                    am5.ready(function() {
+                        // Create root element
+                        // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+                        var root = am5.Root.new("chartdiv");
+                        
+                        // Set themes
+                        // https://www.amcharts.com/docs/v5/concepts/themes/
+                        root.setThemes([
+                            am5themes_Animated.new(root),
+                        ]);
+                        
+                        // Add series
+                        // https://www.amcharts.com/docs/v5/charts/word-cloud/
+                        const rankingNews_title=document.getElementById("rankingNews_title");
+                        var series = root.container.children.push(am5wc.WordCloud.new(root, {
+                        maxCount:100,
+                        minWordLength:2,
+                        maxFontSize:am5.percent(35),
+                        text: rankingNews_title.textContent,
+                        }));
+                        
+                        // Configure labels
+                        series.labels.template.setAll({
+                        paddingTop: 5,
+                        paddingBottom: 5,
+                        paddingLeft: 5,
+                        paddingRight: 5,
+                        fontFamily: "Courier New"
+                        });
+                    }); // end am5.ready()
+                </script>
+                <!-- HTML -->
+                <div class="d-flex flex-wrap" id="chartdiv"></div>
             </div>
             <div class="p-1 d-flex flex-row flex-wrap" style="font-size:13px; text-align:start; height:auto;"
                 id="expandKeyword_searchLog">
@@ -65,7 +115,7 @@
             <div class="row my-1 px-3">
                 <div class="col">
                     <table class="table table-hover table-sm table-striped" style="font-size:100%;">
-                        <tbody>
+                        <tbody id="rankingNews_title">
                             {% for keyword in news_keywords %}
                             <tr>
                                 {% if forloop.counter <= 10 %} <th class="h4" scope="row" style="color : green;">

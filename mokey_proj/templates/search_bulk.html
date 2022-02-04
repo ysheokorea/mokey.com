@@ -41,13 +41,13 @@
             <div class="row my-3" id="bulk_keyword_bx">
                 <div class="col">
                     <div class="form-group d-flex flex-column justify-content-center">
-                        <textarea type="text" id="bulk_search_keyword_pc" class="form-control"
+                        <textarea type="text" id="bulk_search_keyword_pc" class="form-control mx-auto"
                             placeholder="키워드를 입력하세요" aria-label="키워드를 입력하세요" aria-describedby="basic-addon2"
-                            style="width:100%; height:300px;"></textarea>
+                            style="width:50%; height:250px; resize:none;"></textarea>
                         <textarea type="text" id="bulk_search_keyword_mobile" class="form-control"
                             placeholder="키워드를 입력하세요" aria-label="키워드를 입력하세요" aria-describedby="basic-addon2"
-                            style="width:100%; height:300px;"></textarea>
-                        <button type="submit" id="bulk_btn_keywords_pc" class="btn btn-primary">키워드분석</button>
+                            style="width:100%; height:150px; resize:none;"></textarea>
+                        <button type="submit" id="bulk_btn_keywords_pc" class="btn btn-primary mx-auto" style="width:50%;">키워드분석</button>
                         <button type="submit" id="bulk_btn_keywords_mobile" class="btn btn-primary">키워드분석</button>
 
                     </div>
@@ -85,7 +85,7 @@
             </div>
             <div class="row my-1">
                 <div class="text-right mr-3" data-toggle="tooltip" data-placement="top" title="csv 다운로드"
-                    id="bulk_csv_btn"></div>
+                    id="bulk_csv_btn" style="display:none !important;"></div>
                 <script>
                     $(function () {
                         $('[data-toggle="tooltip"]').tooltip()

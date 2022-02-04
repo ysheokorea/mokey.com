@@ -62,8 +62,8 @@
                 <nav class="nav nav-masthead d-flex flex-row justify-content-center navlinkbar" id="masthead">
                     <a class="nav-link my-auto" href="{% url 'live_keyword' %}">인기검색어</a>
                     <a class="nav-link my-auto" href="{% url 'ranking_news' %}">인기뉴스</a> 
-                    <a class="nav-link my-auto" href="{% url 'recommend_keywords' %}">키워드추천</a>
                     <a class="nav-link my-auto" href="{% url 'search_bulk' %}">대량분석</a> 
+                    <a class="nav-link my-auto" href="{% url 'recommend_keywords' %}">키워드추천</a>
                     {% if request.user.is_staff %}
                     <a class="nav-link my-auto" href="{% url 'expandKeyword' %}">키워드확장</a>  
                     <a class="nav-link my-auto" href="{% url 'blogAnaylize' %}">블로그분석</a>
