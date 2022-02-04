@@ -2,19 +2,20 @@ const searchform = document.getElementById("searchform");
 /* Ads Elements */
 const ads_panel_main=document.querySelectorAll(".ads_panel_main")
 const ads_panel_side=document.querySelectorAll(".ads_panel_side");
-/* livekw DateChangeBtn */
-const livekw_btn_left=document.getElementById("livekw_btn_left");
-const livekw_btn_rigth=document.getElementById("livekw_btn_rigth");
-const dateValue=document.getElementById("dateValue");
-const live_keyword_table_pc=document.getElementById("live_keyword_table_pc");
-
-/* livekw DateChangeBtn */
-const livekw_btn_left_mobile=document.getElementById("livekw_btn_left_mobile");
-const dateValue_mobile=document.getElementById("dateValue_mobile");
-const livekw_btn_right_mobile=document.getElementById("livekw_btn_right_mobile");
-const live_keyword_table_mobile=document.getElementById("live_keyword_table_mobile");
 
 try{
+    /* livekw DateChangeBtn */
+    const livekw_btn_left=document.getElementById("livekw_btn_left");
+    const livekw_btn_rigth=document.getElementById("livekw_btn_rigth");
+    const dateValue=document.getElementById("dateValue");
+    const live_keyword_table_pc=document.getElementById("live_keyword_table_pc");
+
+    /* livekw DateChangeBtn */
+    const livekw_btn_left_mobile=document.getElementById("livekw_btn_left_mobile");
+    const dateValue_mobile=document.getElementById("dateValue_mobile");
+    const livekw_btn_right_mobile=document.getElementById("livekw_btn_right_mobile");
+const live_keyword_table_mobile=document.getElementById("live_keyword_table_mobile");
+
     /* change selected date */
     livekw_btn_left.addEventListener("click", (e)=>{
         e.preventDefault();
