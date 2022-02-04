@@ -802,9 +802,9 @@ def expandKeyword_js(request):
 
             keyword_list=expandKeywordScraper(keyword)
             # print("===", keyword, " Scraper Complete! ===")
-            # end1 = time.time()
-            # time_elapsed1=timedelta(seconds=end1-start)
-            # print(time_elapsed1)
+            end1 = time.time()
+            time_elapsed1=timedelta(seconds=end1-start)
+            print(time_elapsed1)
             # print("Scrpaered Tags List", keyword_list) # local working
 
             
