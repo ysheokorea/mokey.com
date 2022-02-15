@@ -815,7 +815,7 @@ def expandKeyword_js(request):
                 try:
                     result_dict={}
                     # 동시에 javascript fetch가 들어오면 naverAdsAPI()가 None을 반환함
-                    time.sleep(0.5) # local working
+                    time.sleep(0.2) # local working
                     searchAmountList=naverAdsAPI(data)
                     print("keyword: ", keyword, "|| searchAmountList : ", searchAmountList) # local working
                     monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
@@ -1181,7 +1181,7 @@ def search_bulk(request):
                     if len(data) > 0:
                         result_dict={}
                         # 동시에 javascript fetch가 들어오면 naverAdsAPI()가 None을 반환함
-                        time.sleep(0.5) # local working
+                        time.sleep(0.2) # local working
                         searchAmountList=naverAdsAPI(data)
                         monthlyPcQcCnt=replaceSearchData(searchAmountList[0].get('monthlyPcQcCnt'))
                         monthlyMobileQcCnt=replaceSearchData(searchAmountList[0].get('monthlyMobileQcCnt'))
