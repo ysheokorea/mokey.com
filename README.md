@@ -133,4 +133,4 @@
    - [Closed] 인기검색어 날짜변경기능, wordcloud js 기능 완료
 
 2022.06.11
-   - [Closed] SSL 
+   - [Closed] SSL 갱신
