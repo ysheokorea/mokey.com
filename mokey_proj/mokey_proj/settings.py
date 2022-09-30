@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,6 +26,10 @@ SECRET_KEY = 'django-insecure-rv@abhk9)4aq!y_h7gfw24hi5l#&#lhecdg!mv*^sn@gk^$r81
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+env = environ.Env(DEBUG=(bool, False))
+environ.Env.read_env(
+    env_file=os.path.join(BASE_DIR, '.env')
+)
 
 ALLOWED_HOSTS = ['*']
 
@@ -85,13 +90,16 @@ WSGI_APPLICATION = 'mokey_proj.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST' : 'mokey-instance.cbpfgyo9gy2g.ap-northeast-2.rds.amazonaws.com',
-        'NAME': 'mokey_database',
+        'HOST' : env('DB_HOST'),
+        'NAME': env('DB_USER'),
         'USER' : 'mokey_admin',
-        'PASSWORD' : 'dkakwhs0097',
+        'PASSWORD' : env('DB_PASSWORD'),
         'PORT' : 5432
     }
 }
+
+
+
 
 
 # Password validation
@@ -145,6 +153,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ystestservice@gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_PASSWORD ='Rnrmfxptmxm11!'
+EMAIL_HOST_PASSWORD = env('EMAIL_PASSWORD')
+
 
 

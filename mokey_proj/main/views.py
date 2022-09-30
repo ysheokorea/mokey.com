@@ -3,6 +3,8 @@ from django.db.models.fields.json import JSONField
 from django.http.response import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 
+import environ
+
 import hashlib
 import hmac
 import base64
@@ -53,6 +55,14 @@ import random
 from pytz import timezone
 
 from django.utils import timezone
+
+
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+env = environ.Env(DEBUG=(bool, False))
+environ.Env.read_env(
+    env_file=os.path.join(BASE_DIR, '.env')
+)
 
 today=timezone.now().strftime('%Y-%m-%d')
 
@@ -368,8 +378,8 @@ def getDataLabMomentum(keyword,device):
         # 구분 : PC / MOBILE
         # 기능 : 전체 검색량 추이 검색
     """
-    client_id = "y118x7mal4_oDlBRqK4r"
-    client_secret = "U934zQQSpn"
+    client_id = env('NAVER_SEARCH_API_CLIENT_ID')
+    client_secret = env('NAVER_SEARCH_API_CLIENT_SECRET')
 
     now=datetime.now()
     # keyword=input('검색어를 입력하세요 : ')
@@ -413,8 +423,8 @@ def getDataLabMomentumMonth(keyword):
     # 이름 : Naver SearchTrend API 사용
     # 기능 : 월 검색량 추이 검색
     """
-    client_id = "y118x7mal4_oDlBRqK4r"
-    client_secret = "U934zQQSpn"
+    client_id = env('NAVER_SEARCH_API_CLIENT_ID')
+    client_secret = env('NAVER_SEARCH_API_CLIENT_SECRET')
 
     period_list=[]
     trend_list=[]
@@ -510,9 +520,9 @@ def naverAdsAPI(keyword):
 
     search_keyword = keyword
     BASE_URL = 'https://api.naver.com'
-    API_KEY = '0100000000ce9bdb5901ac1f0e07c30198bebd57e41924b79249169f83eabcfbc94622d23f'
-    SECRET_KEY = 'AQAAAADOm9tZAawfDgfDAZi+vVfkPhxLJkypdy++j0sM6s4xLg=='
-    CUSTOMER_ID = '1844975'
+    API_KEY = env('NAVER_API_KEY')
+    SECRET_KEY = env('NAVER_API_SECRET_KEY')
+    CUSTOMER_ID = env('NAVERAPI_CUTOMER_ID')
 
     uri = '/keywordstool'
     method = 'GET'
@@ -528,8 +538,8 @@ def naverSearchAPI_blog(keyword):
     """
     response_body_dict = {}
 
-    client_id = "y118x7mal4_oDlBRqK4r"
-    client_secret = "U934zQQSpn"
+    client_id = env('NAVER_SEARCH_API_CLIENT_ID'),
+    client_secret = env('NAVER_SEARCH_API_CLIENT_SECRET'),
     query = urllib.parse.quote(keyword)
     display = 1
     start = 1
@@ -553,8 +563,8 @@ def naverSearchAPI_kin(keyword):
     """
     response_body_dict = {}
 
-    client_id = "y118x7mal4_oDlBRqK4r"
-    client_secret = "U934zQQSpn"
+    client_id = env('NAVER_SEARCH_API_CLIENT_ID'),
+    client_secret =  env('NAVER_SEARCH_API_CLIENT_SECRET'),
     query = urllib.parse.quote(keyword)
     display = 1
     start = 1
@@ -578,8 +588,8 @@ def naverSearchAPI_cafe(keyword):
     """
     response_body_dict = {}
 
-    client_id = "y118x7mal4_oDlBRqK4r"
-    client_secret = "U934zQQSpn"
+    client_id =env('NAVER_SEARCH_API_CLIENT_ID'),
+    client_secret =  env('NAVER_SEARCH_API_CLIENT_SECRET'),
     query = urllib.parse.quote(keyword)
     display = 1
     start = 1
