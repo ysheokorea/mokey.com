@@ -15,32 +15,46 @@
 ## 메인 기능
 
 ### 1. 키워드 분석
+- 키워드 발행량 대비 검색량 출력
+- 키워드 조회량 일별 / 월별 조회량 차트 출력
+- 연관검색어 출력
+
+<br />
+
 <p align="center"> 
 	<img src="https://media-private.canva.com/7490g/MAFOQF7490g/1/s.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJWF6QO3UH4PAAJ6Q%2F20221005%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221005T192107Z&X-Amz-Expires=61195&X-Amz-Signature=51b96b1d3613cfff514ca262fdbb06db69406a3c404cbe1a8e1e2ad68c0101ee&X-Amz-SignedHeaders=host&response-expires=Thu%2C%2006%20Oct%202022%2012%3A21%3A02%20GMT" />
+	<img src="https://media-private.canva.com/DEOeY/MAFOQODEOeY/1/s2.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJWF6QO3UH4PAAJ6Q%2F20221005%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221005T161448Z&X-Amz-Expires=75163&X-Amz-Signature=6a64fe7b5380cdea80f6a052dd1db4be6de27136581872527e892c0e0eeaf3ea&X-Amz-SignedHeaders=host&response-expires=Thu%2C%2006%20Oct%202022%2013%3A07%3A31%20GMT" />
 </p>
+<br /><br />
 
 ### 2. 실시간 인기 검색어 조회
 
 <p align="center"> 
 	<img src="https://media-private.canva.com/zgr4M/MAFOQAzgr4M/1/s2.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJWF6QO3UH4PAAJ6Q%2F20221005%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221005T101835Z&X-Amz-Expires=95259&X-Amz-Signature=d6813e4e85448ef712fb157585a961b7fec37f499159885cddd079bb5e33a3b9&X-Amz-SignedHeaders=host&response-expires=Thu%2C%2006%20Oct%202022%2012%3A46%3A14%20GMT" />
 </p>
+<br /><br />
+
 ### 3. 인기 뉴스 조회
 
 <p align="center"> 
 	<img src="https://media-private.canva.com/21E_Y/MAFOQG21E_Y/1/s2.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJWF6QO3UH4PAAJ6Q%2F20221006%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221006T031818Z&X-Amz-Expires=33875&X-Amz-Signature=497b7c777236def39299f60ade85cac7784a1206e0829cc15f7c115d1d217efe&X-Amz-SignedHeaders=host&response-expires=Thu%2C%2006%20Oct%202022%2012%3A42%3A53%20GMT" />
 </p>
+<br /><br />
 
 ### 4. 검색 기록 확인
 
 <p align="center"> 
 	<img src="https://media-private.canva.com/_U2fk/MAFOQG_U2fk/1/s2.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJWF6QO3UH4PAAJ6Q%2F20221005%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221005T155340Z&X-Amz-Expires=75344&X-Amz-Signature=35ec693a8c8b5bc57f08852abd446cd8b7feca374730811a69f6c207e4084708&X-Amz-SignedHeaders=host&response-expires=Thu%2C%2006%20Oct%202022%2012%3A49%3A24%20GMT" />
 </p>
-
+<br /><br />
 
 ## **🚀️ 배포링크 : https://www.mokey.net**
 
+<br /><br />
+
 ## Architecture
 <img src="https://media-private.canva.com/TpILI/MAFOQFTpILI/1/s2.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJWF6QO3UH4PAAJ6Q%2F20221005%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221005T165115Z&X-Amz-Expires=71563&X-Amz-Signature=382cc731ae65dedee761a249f9dcd6493f02d68b19e38f6fd5edfe2c5bc93aab&X-Amz-SignedHeaders=host&response-expires=Thu%2C%2006%20Oct%202022%2012%3A43%3A58%20GMT" />
+<br /><br />
 
 ## 🛠️ **Tech Stack**
 
@@ -55,6 +69,4 @@
     <img style="height:28px;"  src="https://bit.ly/3SJqwwj" />
     <img src="https://img.shields.io/badge/Django-092E20.svg?style=for-the-badge&logo=Django&logoColor=white" />
     <img src="https://img.shields.io/badge/Bootstrap-7952B3.svg?style=for-the-badge&logo=Bootstrap&logoColor=white" />
-    
-    
 </p>
