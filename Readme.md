@@ -26,6 +26,8 @@
     <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
     <img style="height:28px;" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F0qvom%2FbtrM8Osz5LI%2FaO1hCXopDXKp59BtOpFrzK%2Fimg.png" alt="" class="badgeImage">
     <img style="height:28px;"  src="https://bit.ly/3SJqwwj" />
-    <img src="" />
+    <img src="https://img.shields.io/badge/Django-092E20.svg?style=for-the-badge&logo=Django&logoColor=white" />
+    <img src="https://img.shields.io/badge/Bootstrap-7952B3.svg?style=for-the-badge&logo=Bootstrap&logoColor=white" />
+    
     
 </p>
